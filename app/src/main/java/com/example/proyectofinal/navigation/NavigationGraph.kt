@@ -6,23 +6,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-/*
+
 @Composable
 fun NavigationGraph() {
-    val navController = rememberNavController()
+  /*  val navController = rememberNavController()
 
     NavHost( // FragmentContainerView
     navController = navController,
     //startDestination = Screen.LoginScreen.route,
     ) {
         //Add the screen you want to navigate
-        /*addLoginScreen(navController)
+        addLoginScreen(navController)
         addForgotPasswordScreen()
-        addHeroListScreen()*/
-    }
-}*/
+        addHeroListScreen()
+    }*/
+}
 
-
+/*
 NavHost(navController = navigator, startDestination = NavigationScreen.Home.route) {
     composable(
         route = NavigationScreen.Home.route,
@@ -43,3 +43,4 @@ NavHost(navController = navigator, startDestination = NavigationScreen.Home.rout
                         }
                     }
                 }
+                */
