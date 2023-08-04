@@ -1,5 +1,8 @@
 package com.example.proyectofinal.presentation.topbar
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,47 +13,50 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.proyectofinal.ui.theme.PurpleText
 
 @Composable
 fun TopBar(
-    title: String,
     onIconClick: () -> Unit
 ) {
     TopAppBar(
+        backgroundColor = Color.White,
         title = {
-            Text(
-                text = title,
-                color = Color.White,
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp)
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onIconClick) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "User Icon",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.White
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Moncinema",
+                    color = PurpleText,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
                 )
+                IconButton(onClick = onIconClick) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "User Icon",
+                        modifier = Modifier.size(40.dp),
+                        tint = Color.Black
+                    )
+                }
             }
-        },
-        backgroundColor = Color(0xFF9400D3)
+        }
     )
 }
-
 
 
 @Preview
 @Composable
 fun TopBarScreenPreview() {
-    /*TopBar(
-        onLoginSuccess = {},
-        onForgotClicked = { test -> }
-    )*/
+    TopBar(
+        onIconClick = {}
+    )
 }

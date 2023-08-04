@@ -17,6 +17,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -34,12 +35,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.proyectofinal.ui.theme.LightBlueBackground
+import com.example.proyectofinal.ui.theme.PurpleText
+import com.example.proyectofinal.ui.theme.Typography
 
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
-    // Prueba de paso de parámetros
-    onForgotClicked: (Int) -> Unit
 ) {
 
     Column(
@@ -59,10 +61,7 @@ fun LoginScreen(
 
         Text(
             text = "Moncinema",
-            fontSize = 30.sp,
-            letterSpacing = 5.sp,
-            color = Color(0xFF800080)
-
+            style = Typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(100.dp))
@@ -156,8 +155,8 @@ fun LoginButton(onLoginSuccess: () -> Unit) {
             .fillMaxWidth()
             .height(50.dp),
         shape = RoundedCornerShape(16.dp), // Bordes redondeados
-        border = BorderStroke(2.dp, Color(0xFF9400D3)), // Borde lila
-        colors = ButtonDefaults.buttonColors(Color(0xFFE1F5FF))
+        border = BorderStroke(2.dp, PurpleText), // Borde lila
+        colors = ButtonDefaults.buttonColors(LightBlueBackground)
     ) {
         Text(
             text = "LOGIN"
@@ -187,6 +186,5 @@ fun RememberPasswordCheckbox() {
 fun LoginScreenPreview() {
     LoginScreen(
         onLoginSuccess = {},
-        onForgotClicked = { test -> }
     )
 }

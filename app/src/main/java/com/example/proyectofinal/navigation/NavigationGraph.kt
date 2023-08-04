@@ -1,26 +1,24 @@
 package com.example.proyectofinal.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun NavigationGraph() {
-  /*  val navController = rememberNavController()
+    val navController = rememberNavController()
 
-    NavHost( // FragmentContainerView
+    NavHost(
     navController = navController,
-    //startDestination = Screen.LoginScreen.route,
+    startDestination = Screen.LoginScreen.route,
     ) {
         //Add the screen you want to navigate
         addLoginScreen(navController)
-        addForgotPasswordScreen()
-        addHeroListScreen()
-    }*/
+        addMovieListScreen(navController)
+        addMovieDetailScreen(navController)
+    }
 }
+
 
 /*
 NavHost(navController = navigator, startDestination = NavigationScreen.Home.route) {

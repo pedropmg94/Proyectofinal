@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.movielist
+package com.example.proyectofinal.presentation.characterlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,9 @@ import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MovieListViewModel(private val getCharacterListUseCase: GetCharacterListUseCase): ViewModel() {
+class CharacterListViewModel(
+    private val getCharacterListUseCase: GetCharacterListUseCase
+    ): ViewModel() {
 
     init {
         getData()
@@ -19,7 +21,7 @@ class MovieListViewModel(private val getCharacterListUseCase: GetCharacterListUs
     val ui: LiveData<MovieListUI> get() = _ui
 
 
-    fun getData() {
+    private fun getData() {
 
         viewModelScope.launch(Dispatchers.IO) {
             getCharacterListUseCase.invoke()
