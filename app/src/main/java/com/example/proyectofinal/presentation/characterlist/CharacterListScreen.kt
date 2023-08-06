@@ -16,7 +16,6 @@ fun CharacterListScreen(
     onItemClick: (Int) -> Unit
 ) {
     val state = characterListViewModel.ui.observeAsState()
-
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -24,11 +23,10 @@ fun CharacterListScreen(
         items(characterList?.items?.size ?: 0) { i ->
             val item = characterList?.items?.get(i)
             item?.let { character ->
+                //println(character)
                 CharacterItem(character) {
                     onItemClick.invoke(character.id)
                 }
-
-
             }
         }
     }

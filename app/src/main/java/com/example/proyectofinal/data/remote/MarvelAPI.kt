@@ -1,12 +1,28 @@
 package com.example.proyectofinal.data.remote
 
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
-
-const val TOKEN = ""
-
-const val APIKEY = "0b7870d1147ffec101c8240107afcf96"
-
-const val HASH = "dabc3843eb8a028ca6a9d88758daedc4"
 
 interface MarvelAPI {
+
+    @GET("v1/public/characters")
+    suspend fun getCharacerList(
+        @Query("apikey") apikey: String,
+        @Query("ts") ts: Int,
+        @Query("hash") hash: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): CharacterDTO
+
+    @GET("v1/public/characters/{id}")
+    suspend fun getCharacterDetail(
+        @Path("id") id: Int,
+        @Query("apikey") apikey: String,
+        @Query("ts") ts: Int,
+        @Query("hash") hash: String
+    ): CharacterDTO
+
+
 }

@@ -1,8 +1,12 @@
 package com.example.proyectofinal.di
 
+import com.example.proyectofinal.data.remote.MarvelAPI
+import com.example.proyectofinal.data.remote.RemoteDataSource
+import com.example.proyectofinal.data.remote.RemoteDataSourceImpl
+import com.example.proyectofinal.data.repository.CharacterRepository
+import com.example.proyectofinal.data.repository.CharacterRepositoryImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -25,6 +29,8 @@ Se configura con la URL base de la API, el cliente OkHttp y un convertidor Moshi
 Se configura con un adaptador de Kotlin para trabajar con objetos Kotlin.
 
  */
+
+const val BaseURL = "https://gateway.marvel.com/"
 
 val dataModule = module {
 
@@ -60,7 +66,7 @@ val dataModule = module {
      */
     single<Retrofit> {
         Retrofit.Builder()
-            .baseUrl("https://gateway.marvel.com/")
+            .baseUrl(BaseURL)
             .client(get())
             .addConverterFactory(MoshiConverterFactory.create(get()))
             .build()
@@ -77,7 +83,11 @@ val dataModule = module {
             .build()
     }
 
-
-
+    single<RemoteDataSource> { RemoteDataSourceImpl(get()) }
+    single<MarvelAPI> { getMarvelAPI(get()) }
+    single<CharacterRepository> { CharacterRepositoryImpl(get()) }
 
 }
+
+private fun getMarvelAPI(retrofit: Retrofit) =
+    retrofit.create(MarvelAPI::class.java)

@@ -8,6 +8,7 @@ import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CharacterListViewModel(
     private val getCharacterListUseCase: GetCharacterListUseCase
@@ -17,17 +18,20 @@ class CharacterListViewModel(
         getData()
     }
 
-    private val _ui = MutableLiveData<MovieListUI>()
-    val ui: LiveData<MovieListUI> get() = _ui
+    private val _ui = MutableLiveData<CharacterListUI>()
+    val ui: LiveData<CharacterListUI> get() = _ui
 
 
     private fun getData() {
 
         viewModelScope.launch(Dispatchers.IO) {
-            getCharacterListUseCase.invoke()
+            val characterList = getCharacterListUseCase.invoke()
+            withContext(Dispatchers.Main) {
+                _ui.value = CharacterListUI(items = characterList)
+            }
         }
     }
 
 }
 
-data class MovieListUI(val items: List<CharacterModel>)
+data class CharacterListUI(val items: List<CharacterModel>)

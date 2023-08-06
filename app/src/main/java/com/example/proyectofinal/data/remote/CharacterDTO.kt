@@ -79,7 +79,6 @@ data class Url(
     @Json(name = "url") val url: String?
 )
 
-
 data class Item(
     @Json(name = "name") val name: String?,
     @Json(name = "resourceURI") val resourceURI: String?
@@ -91,18 +90,3 @@ data class ItemXXX(
     @Json(name = "resourceURI") val resourceURI: String?,
     @Json(name = "type") val type: String?
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

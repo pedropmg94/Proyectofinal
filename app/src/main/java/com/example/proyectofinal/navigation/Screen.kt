@@ -11,13 +11,13 @@ sealed class Screen(
         arguments = emptyList()
     )
 
-    object MovieListScreen: Screen(
-        route = "movieList",
+    object CharacterListScreen: Screen(
+        route = "characterList",
         arguments = emptyList()
     )
 
-    object MovieDetailScreen: Screen(
-        route = "movieDetail",
+    object CharacterDetailScreen: Screen(
+        route = "characterDetail",
         arguments = emptyList()
     )
 

@@ -14,8 +14,8 @@ fun NavigationGraph() {
     ) {
         //Add the screen you want to navigate
         addLoginScreen(navController)
-        addMovieListScreen(navController)
-        addMovieDetailScreen(navController)
+        addCharacterListScreen(navController)
+        addCharacterDetailScreen()
     }
 }
 
