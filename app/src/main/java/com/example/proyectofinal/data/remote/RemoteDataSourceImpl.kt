@@ -1,6 +1,7 @@
 package com.example.proyectofinal.data.remote
 
-import com.example.proyectofinal.domain.model.CharacterModel
+import com.example.proyectofinal.data.remote.dto.CharacterDTO
+import com.example.proyectofinal.data.remote.dto.ComicDTO
 
 class RemoteDataSourceImpl(
     private val marvelAPI: MarvelAPI
@@ -16,4 +17,7 @@ class RemoteDataSourceImpl(
 
     override suspend fun getCharacterDetail(id: Int): CharacterDTO =
         marvelAPI.getCharacterDetail(id, APIKEY, TS, HASH)
+
+    override suspend fun getComicList(): ComicDTO =
+        marvelAPI.getComicList(APIKEY, TS, HASH, 100, 0)
 }

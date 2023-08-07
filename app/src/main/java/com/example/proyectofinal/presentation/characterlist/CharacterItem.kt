@@ -1,36 +1,34 @@
 package com.example.proyectofinal.presentation.characterlist
 
-import android.util.Log
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
-import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.CharacterModel
+import com.example.proyectofinal.presentation.components.StarComponent
 import com.example.proyectofinal.presentation.ui.theme.*
 
 @Composable
@@ -38,7 +36,9 @@ fun CharacterItem(
     character: CharacterModel,
     onClick: () -> Unit,
 ) {
-
+    var starred by remember {
+        mutableStateOf(false)
+    }
     Card(
         modifier = Modifier.padding(globalPadding),
         elevation = globalElevation,
@@ -53,7 +53,17 @@ fun CharacterItem(
                 },
             //verticalAlignment = Alignment.CenterVertically
         ) {
-            CharacterName(character)
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CharacterName(character)
+                Spacer(modifier = Modifier.width(10.dp))
+                StarIcon()
+            }
+
             CharacterImage(character)
 
         }
@@ -66,20 +76,8 @@ fun CharacterImage(character: CharacterModel) {
         model = character.photoURL,
         contentDescription = "",
         contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize() // Tanto el ancho como el alto ocuparán el espacio disponible
-    )/*
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-    ) {
-        AsyncImage(
-            model = character.photoURL,
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize() // Tanto el ancho como el alto ocuparán el espacio disponible
-        )
-    }*/
+        modifier = Modifier.fillMaxSize()
+    )
 }
 
 @Composable
@@ -92,6 +90,30 @@ fun CharacterName(character: CharacterModel) {
         overflow = TextOverflow.Ellipsis
     )
 }
+
+@Composable
+fun StarIcon() {
+
+    var starred by remember {
+        mutableStateOf(false)
+    }
+
+    AndroidView(
+        modifier = Modifier.clickable {
+            val newState = !starred
+            starred = newState
+        },
+        factory = { context ->
+            StarComponent(context).apply {
+                this.checked = starred
+            }
+        },
+        update = {
+            it.checked = starred
+        }
+    )
+}
+
 
 @Composable
 @Preview
