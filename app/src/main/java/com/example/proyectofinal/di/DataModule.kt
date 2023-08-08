@@ -5,6 +5,10 @@ import com.example.proyectofinal.data.remote.RemoteDataSource
 import com.example.proyectofinal.data.remote.RemoteDataSourceImpl
 import com.example.proyectofinal.data.repository.CharacterRepository
 import com.example.proyectofinal.data.repository.CharacterRepositoryImpl
+import com.example.proyectofinal.data.repository.ComicRepository
+import com.example.proyectofinal.data.repository.ComicRepositoryImpl
+import com.example.proyectofinal.data.repository.SerieRepository
+import com.example.proyectofinal.data.repository.SerieRepositoryImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -86,6 +90,8 @@ val dataModule = module {
     single<RemoteDataSource> { RemoteDataSourceImpl(get()) }
     single<MarvelAPI> { getMarvelAPI(get()) }
     single<CharacterRepository> { CharacterRepositoryImpl(get()) }
+    single<ComicRepository> { ComicRepositoryImpl(get()) }
+    single<SerieRepository> { SerieRepositoryImpl(get()) }
 
 }
 

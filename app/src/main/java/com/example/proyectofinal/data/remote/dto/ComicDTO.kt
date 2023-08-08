@@ -1,11 +1,13 @@
 package com.example.proyectofinal.data.remote.dto
 
+import com.squareup.moshi.Json
+
 data class ComicDTO(
     /*val attributionHTML: String,
     val attributionText: String,
     val code: Int,
     val copyright: String,*/
-    val `data`: Data,
+    @Json(name = "data") val data: ComicData,
     /*val etag: String,
     val status: String*/
 )
@@ -14,95 +16,102 @@ data class ComicData(
     /*val count: Int,
     val limit: Int,
     val offset: Int,*/
-    val results: List<ComicResult>,
+    @Json(name = "results") val results: List<ComicResult>,
     //val total: Int
 )
 
 data class ComicResult(
-    val characters: Characters,
-    val collectedIssues: List<CollectedIssue>,
-    val collections: List<Any>,
-    val creators: Creators,
-    val dates: List<Date>,
-    val description: String,
-    val diamondCode: String,
-    val digitalId: Int,
-    val ean: String,
-    val events: Events,
-    val format: String,
-    val id: Int,
-    val images: List<Image>,
-    val isbn: String,
-    val issn: String,
-    val issueNumber: Int,
-    val modified: String,
-    val pageCount: Int,
-    val prices: List<Price>,
-    val resourceURI: String,
-    val series: ComicsSeries,
-    val stories: ComicsStories,
-    val textObjects: List<TextObject>,
-    val thumbnail: Thumbnail,
-    val title: String,
-    val upc: String,
-    val urls: List<Url>,
-    val variantDescription: String,
-    val variants: List<Variant>
+    @Json(name = "characters") val characters: ComicCharacters?,
+    @Json(name = "collectedIssues") val collectedIssues: List<CollectedIssue>?,
+    @Json(name = "collections") val collections: List<Any>?,
+    @Json(name = "creators") val creators: ComicCreators?,
+    @Json(name = "dates") val dates: List<Date>?,
+    @Json(name = "description") val description: String?,
+    @Json(name = "diamondCode") val diamondCode: String?,
+    @Json(name = "digitalId") val digitalId: Int?,
+    @Json(name = "ean") val ean: String?,
+    @Json(name = "events") val events: ComicEvents?,
+    @Json(name = "format") val format: String?,
+    @Json(name = "id") val id: Int?,
+    @Json(name = "images") val images: List<Image>?,
+    @Json(name = "isbn") val isbn: String?,
+    @Json(name = "issn") val issn: String?,
+    @Json(name = "issueNumber") val issueNumber: Int?,
+    @Json(name = "modified") val modified: String?,
+    @Json(name = "pageCount") val pageCount: Int?,
+    @Json(name = "prices") val prices: List<Price>?,
+    @Json(name = "resourceURI") val resourceURI: String?,
+    @Json(name = "series") val series: ComicsSeries?,
+    @Json(name = "stories") val stories: ComicsStories?,
+    @Json(name = "textObjects") val textObjects: List<TextObject>?,
+    @Json(name = "thumbnail") val thumbnail: Thumbnail?,
+    @Json(name = "title") val title: String?,
+    @Json(name = "upc") val upc: String?,
+    @Json(name = "urls") val urls: List<Url>?,
+    @Json(name = "variantDescription") val variantDescription: String?,
+    @Json(name = "variants") val variants: List<Variant>?
 )
 
-data class Characters(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<Item>,
-    val returned: Int
+data class ComicCharacters(
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<Item>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class CollectedIssue(
-    val name: String,
-    val resourceURI: String
+    @Json(name = "name") val name: String?,
+    @Json(name = "resourceURI") val resourceURI: String?
 )
 
-data class Creators(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<ItemX>,
-    val returned: Int
+data class ComicCreators(
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<ItemX>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class Date(
-    val date: String,
-    val type: String
+    @Json(name = "date") val date: String?,
+    @Json(name = "type") val type: String?
+)
+
+data class ComicEvents(
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<Any>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class Image(
-    val extension: String,
-    val path: String
+    @Json(name = "extension") val extension: String?,
+    @Json(name = "path") val path: String?
 )
 
 data class Price(
-    val price: Double,
-    val type: String
+    @Json(name = "price") val price: Double?,
+    @Json(name = "type") val type: String?
 )
 
 data class ComicsSeries(
-    val name: String,
-    val resourceURI: String
+    @Json(name = "name") val name: String?,
+    @Json(name = "resourceURI") val resourceURI: String?
 )
 
 data class ComicsStories(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<ItemXX>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<ItemXX>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class TextObject(
-    val language: String,
-    val text: String,
-    val type: String
+    @Json(name = "language") val language: String?,
+    @Json(name = "text") val text: String?,
+    @Json(name = "type") val type: String?
 )
 
 data class Variant(
-    val name: String,
-    val resourceURI: String
+    @Json(name = "name") val name: String?,
+    @Json(name = "resourceURI") val resourceURI: String?
 )

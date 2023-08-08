@@ -2,8 +2,6 @@ package com.example.proyectofinal.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Tab
@@ -11,8 +9,6 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +23,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HeaderTabLayout(
     tabs: List<String>,
-    modifier: Modifier = Modifier,
+    //modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -67,11 +63,11 @@ fun HeaderTabLayout(
 @Preview
 @Composable
 fun HeaderTabLayoutPreview() {
-    val tabs = listOf("Personajes", "Comics", "Series", "Historias")
+    val tabs = listOf("Personajes", "Comics", "Series")
 
     HeaderTabLayout(
         tabs = tabs,
-        modifier = Modifier.fillMaxWidth(),
+        //modifier = Modifier.fillMaxWidth(),
         onTabSelected = {}
     )
 }

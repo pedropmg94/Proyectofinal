@@ -26,13 +26,8 @@ sealed class Screen(
         arguments = emptyList()
     )
 
-    object SeriesListScreen: Screen(
-        route = "seriesList",
-        arguments = emptyList()
-    )
-
-    object StoryListScreen: Screen(
-        route = "storyList",
+    object SerieListScreen: Screen(
+        route = "serieList",
         arguments = emptyList()
     )
 

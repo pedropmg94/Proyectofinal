@@ -3,13 +3,13 @@ package com.example.proyectofinal.data.remote.dto
 import com.squareup.moshi.Json
 
 data class SerieDTO(
-    val attributionHTML: String,
+    /*val attributionHTML: String,
     val attributionText: String,
     val code: Int,
-    val copyright: String,
-    val data: SerieData,
-    val etag: String,
-    val status: String
+    val copyright: String,*/
+    @Json(name = "data") val data: SerieData?,
+    /*val etag: String,
+    val status: String*/
 )
 
 data class SerieData(
@@ -21,62 +21,62 @@ data class SerieData(
 )
 
 data class SerieResult(
-    val characters: SerieCharacters,
-    val comics: SerieComics,
-    val creators: SerieCreators,
-    val description: String,
-    val endYear: Int,
-    val events: SerieEvents,
-    val id: Int,
-    val modified: String,
-    val next: Next,
-    val previous: Any,
-    val rating: String,
-    val resourceURI: String,
-    val startYear: Int,
-    val stories: SerieStories,
-    val thumbnail: Thumbnail,
-    val title: String,
-    val type: String,
-    val urls: List<Url>
+    @Json(name = "characters") val characters: SerieCharacters?,
+    @Json(name = "comics") val comics: SerieComics?,
+    @Json(name = "creators") val creators: SerieCreators?,
+    @Json(name = "description") val description: String?,
+    @Json(name = "endYear") val endYear: Int?,
+    @Json(name = "events") val events: SerieEvents?,
+    @Json(name = "id") val id: Int?,
+    @Json(name = "modified") val modified: String?,
+    @Json(name = "next") val next: Next?,
+    @Json(name = "previous") val previous: Any?,
+    @Json(name = "rating") val rating: String?,
+    @Json(name = "resourceURI") val resourceURI: String?,
+    @Json(name = "startYear") val startYear: Int?,
+    @Json(name = "stories") val stories: SerieStories?,
+    @Json(name = "thumbnail") val thumbnail: Thumbnail?,
+    @Json(name = "title") val title: String?,
+    @Json(name = "type") val type: String?,
+    @Json(name = "urls") val urls: List<Url>?
 )
 
 data class SerieCharacters(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<Item>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<Item>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class SerieComics(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<Item>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<Item>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class SerieCreators(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<ItemXX>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<ItemXX>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class SerieEvents(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<Any>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<Any>?,
+    @Json(name = "returned") val returned: Int?
 )
 
 data class Next(
-    val name: String,
-    val resourceURI: String
+    @Json(name = "name") val name: String?,
+    @Json(name = "resourceURI") val resourceURI: String?
 )
 
 data class SerieStories(
-    val available: Int,
-    val collectionURI: String,
-    val items: List<ItemXXX>,
-    val returned: Int
+    @Json(name = "available") val available: Int?,
+    @Json(name = "collectionURI") val collectionURI: String?,
+    @Json(name = "items") val items: List<ItemXXX>?,
+    @Json(name = "returned") val returned: Int?
 )

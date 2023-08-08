@@ -16,6 +16,7 @@ fun NavigationGraph() {
         addLoginScreen(navController)
         addCharacterListScreen(navController)
         addCharacterDetailScreen()
-        //addHeaderTab(navController)
+        addComicListScreen()
+        addSerieListScreen()
     }
 }

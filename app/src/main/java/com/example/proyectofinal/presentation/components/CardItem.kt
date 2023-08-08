@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.characterlist
+package com.example.proyectofinal.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,25 +19,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
-import com.example.proyectofinal.domain.model.CharacterModel
-import com.example.proyectofinal.presentation.components.StarComponent
-import com.example.proyectofinal.presentation.ui.theme.*
+import com.example.proyectofinal.R
+import com.example.proyectofinal.presentation.theme.globalElevation
+import com.example.proyectofinal.presentation.theme.globalPadding
+import com.example.proyectofinal.presentation.theme.globalRoundedCornerShape
 
 @Composable
-fun CharacterItem(
-    character: CharacterModel,
+fun <T : Any> CardItem(
+    item: T,
     onClick: () -> Unit,
+    nameProvider: (T) -> String,
+    photoURLProvider: (T) -> String
 ) {
-    var starred by remember {
-        mutableStateOf(false)
-    }
     Card(
         modifier = Modifier.padding(globalPadding),
         elevation = globalElevation,
@@ -50,8 +49,7 @@ fun CharacterItem(
                 .fillMaxWidth()
                 .clickable {
                     onClick.invoke()
-                },
-            //verticalAlignment = Alignment.CenterVertically
+                }
         ) {
             Row(
                 modifier = Modifier
@@ -59,35 +57,38 @@ fun CharacterItem(
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CharacterName(character)
+                CharacterName(nameProvider(item))
+
                 Spacer(modifier = Modifier.width(10.dp))
+
                 StarIcon()
             }
-
-            CharacterImage(character)
-
+            ItemImage(photoURLProvider(item))
         }
     }
 }
 
-@Composable
-fun CharacterImage(character: CharacterModel) {
-    AsyncImage(
-        model = character.photoURL,
-        contentDescription = "",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize()
-    )
-}
 
 @Composable
-fun CharacterName(character: CharacterModel) {
+fun CharacterName(itemName: String) {
     Text(
-        text = character.name,
+        text = itemName,
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+fun ItemImage(itemPhotoURL: String) {
+    AsyncImage(
+        placeholder = painterResource(id = R.drawable.marvellogo),
+        error = painterResource(id = R.drawable.marvellogo),
+        model = itemPhotoURL,
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize()
     )
 }
 
@@ -114,32 +115,13 @@ fun StarIcon() {
     )
 }
 
-
 @Composable
-@Preview
-fun MovieListFragmentScreenPreview() {
-
-    val mockCharacter = CharacterModel(
-        id = 1,
-        name = "Prueba",
-        description = "Descripción de prueba",
-        photoURL =  "httpsdeprueba"
+fun <T : Any> ItemCardPreview(item: T) {
+    CardItem(
+        item = item,
+        onClick = {},
+        nameProvider = { "Nombre" },
+        photoURLProvider = { "URL de la foto" }
     )
-
-    CharacterItem(mockCharacter) {
-
-    }
 }
 
-
-
-/*AsyncImage(
-        modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape),
-        placeholder = painterResource(id = R.drawable.marvellogo),
-        error = painterResource(id = R.drawable.marvellogo),
-        model = character.photoURL,
-        //onError = { it.result.throwable.message?.let { it1 -> Log.e("Pedro", it1) } },
-        contentDescription = ""
-    )*/

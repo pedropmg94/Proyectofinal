@@ -1,30 +1,39 @@
 package com.example.proyectofinal.presentation.comiclist
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
-import com.example.proyectofinal.presentation.characterlist.CharacterItem
-import com.example.proyectofinal.presentation.characterlist.CharacterListViewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.proyectofinal.presentation.components.CardItem
+import com.example.proyectofinal.presentation.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ComicListScreen(
-    characterListViewModel: CharacterListViewModel = koinViewModel(),
-    onItemClick: (Int) -> Unit
+    comicListViewModel: ComicListViewModel = koinViewModel(),
+    //onItemClick: (Int) -> Unit
 ) {
-    val state = characterListViewModel.ui.observeAsState()
-    LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val characterList = state.value
-        items(characterList?.items?.size ?: 0) { i ->
-            val item = characterList?.items?.get(i)
-            item?.let { character ->
-                //println(character)
-                CharacterItem(character) {
-                    onItemClick.invoke(character.id)
+    val state = comicListViewModel.ui.observeAsState()
+    ScaffoldTopBar(onItemClick = {})
+    {
+        LazyColumn(
+            Modifier.padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val comicList = state.value
+            items(comicList?.items?.size ?: 0) { i ->
+                val item = comicList?.items?.get(i)
+                item?.let { comic ->
+                    //println(comic)
+                    CardItem(
+                        item = comic,
+                        onClick = { /*TODO*/ },
+                        nameProvider = {comic.title},
+                        photoURLProvider = {comic.photoURL}
+                    )
                 }
             }
         }
@@ -35,7 +44,5 @@ fun ComicListScreen(
 @Preview
 @Composable
 fun MovieListScreenPreview() {
-    ComicListScreen {
-
-    }
+    ComicListScreen()
 }

@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.ui.theme
+package com.example.proyectofinal.presentation.theme
 
 import androidx.compose.ui.unit.dp
 

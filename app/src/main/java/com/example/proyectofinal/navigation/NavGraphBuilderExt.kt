@@ -1,15 +1,13 @@
 package com.example.proyectofinal.navigation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.proyectofinal.presentation.characterdetails.CharacterDetailScreen
 import com.example.proyectofinal.presentation.characterlist.CharacterListScreen
-import com.example.proyectofinal.presentation.components.HeaderTabLayout
+import com.example.proyectofinal.presentation.comiclist.ComicListScreen
 import com.example.proyectofinal.presentation.login.LoginScreen
+import com.example.proyectofinal.presentation.serielist.SerieListScreen
 
 fun NavGraphBuilder.addLoginScreen(navController: NavHostController) {
     composable(Screen.LoginScreen.route) {
@@ -40,20 +38,14 @@ fun NavGraphBuilder.addCharacterDetailScreen() {
     }
 }
 
-fun NavGraphBuilder.addHeaderTab(navController: NavHostController) {
-    composable(Screen.CharacterListScreen.route) {
-        HeaderTabLayout(
-            tabs = listOf("Personajes", "Comics", "Series", "Historias"),
-            onTabSelected = { tabIndex ->
-                val route = when (tabIndex) {
-                    0 -> Screen.CharacterListScreen.route
-                    1 -> Screen.ComicListScreen.route
-                    2 -> Screen.SeriesListScreen.route
-                    3 -> Screen.StoryListScreen.route
-                    else -> Screen.CharacterListScreen.route
-                }
-                navController.navigate(route)
-            }
-        )
+fun NavGraphBuilder.addComicListScreen() {
+    composable(Screen.ComicListScreen.route) {
+        ComicListScreen()
+    }
+}
+
+fun NavGraphBuilder.addSerieListScreen() {
+    composable(Screen.SerieListScreen.route) {
+        SerieListScreen()
     }
 }
