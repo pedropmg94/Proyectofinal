@@ -15,11 +15,13 @@ import org.koin.androidx.compose.koinViewModel
 fun SerieListScreen(
     serieListViewModel: SerieListViewModel = koinViewModel(),
     //onItemClick: (Int) -> Unit
+    onTabItem: (Int) -> Unit
 ) {
     val state = serieListViewModel.ui.observeAsState()
 
-    ScaffoldTopBar(onItemClick = {})
-    {
+    ScaffoldTopBar(onTabClick = {
+        onTabItem(it)
+    }) {
         LazyColumn(
             Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -45,5 +47,8 @@ fun SerieListScreen(
 @Preview
 @Composable
 fun MovieListScreenPreview() {
-    SerieListScreen()
+    SerieListScreen(
+        //onItemClick = {},
+        onTabItem = {}
+    )
 }

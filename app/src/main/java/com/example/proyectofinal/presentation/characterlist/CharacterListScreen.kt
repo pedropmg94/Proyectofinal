@@ -8,20 +8,22 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.proyectofinal.presentation.components.CardItem
 import com.example.proyectofinal.presentation.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterListScreen(
     characterListViewModel: CharacterListViewModel = koinViewModel(),
-    onItemClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit,
+    onTabItem: (Int) -> Unit
 ) {
     val state = characterListViewModel.ui.observeAsState()
 
-    ScaffoldTopBar(onItemClick = {})
-    {
+    ScaffoldTopBar(onTabClick = {
+        onTabItem(it)
+    }) {
         LazyColumn(
             Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -41,14 +43,14 @@ fun CharacterListScreen(
             }
         }
     }
-
 }
 
 
 @Preview
 @Composable
 fun MovieListScreenPreview() {
-    CharacterListScreen {
-
-    }
+    CharacterListScreen(
+        onItemClick = {},
+        onTabItem = {}
+    )
 }

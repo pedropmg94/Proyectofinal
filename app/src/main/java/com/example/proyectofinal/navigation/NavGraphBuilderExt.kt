@@ -21,9 +21,18 @@ fun NavGraphBuilder.addLoginScreen(navController: NavHostController) {
 
 fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
     composable(Screen.CharacterListScreen.route) {
-        CharacterListScreen {characterID ->
-            navController.navigate("${Screen.CharacterDetailScreen.route}/$characterID")
-        }
+        CharacterListScreen(
+            onItemClick = { characterID ->
+                navController.navigate("${Screen.CharacterDetailScreen.route}/$characterID")
+                          },
+            onTabItem = {tabIndex ->
+                when (tabIndex) {
+                    0 -> navController.navigate(Screen.CharacterListScreen.route)
+                    1 -> navController.navigate(Screen.ComicListScreen.route)
+                    2 -> navController.navigate(Screen.SerieListScreen.route)
+                }
+            }
+        )
     }
 }
 
@@ -38,14 +47,30 @@ fun NavGraphBuilder.addCharacterDetailScreen() {
     }
 }
 
-fun NavGraphBuilder.addComicListScreen() {
+fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
     composable(Screen.ComicListScreen.route) {
-        ComicListScreen()
+        ComicListScreen(
+            onTabItem = {tabIndex ->
+                when (tabIndex) {
+                    0 -> navController.navigate(Screen.CharacterListScreen.route)
+                    1 -> navController.navigate(Screen.ComicListScreen.route)
+                    2 -> navController.navigate(Screen.SerieListScreen.route)
+                }
+            }
+        )
     }
 }
 
-fun NavGraphBuilder.addSerieListScreen() {
+fun NavGraphBuilder.addSerieListScreen(navController: NavHostController) {
     composable(Screen.SerieListScreen.route) {
-        SerieListScreen()
+        SerieListScreen(
+            onTabItem = {tabIndex ->
+                when (tabIndex) {
+                    0 -> navController.navigate(Screen.CharacterListScreen.route)
+                    1 -> navController.navigate(Screen.ComicListScreen.route)
+                    2 -> navController.navigate(Screen.SerieListScreen.route)
+                }
+            }
+        )
     }
 }

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HeaderTabLayout(
     tabs: List<String>,
-    //modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }

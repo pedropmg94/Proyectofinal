@@ -7,6 +7,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.proyectofinal.presentation.characterlist.CharacterListScreen
 import com.example.proyectofinal.presentation.components.CardItem
 import com.example.proyectofinal.presentation.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
@@ -15,10 +16,12 @@ import org.koin.androidx.compose.koinViewModel
 fun ComicListScreen(
     comicListViewModel: ComicListViewModel = koinViewModel(),
     //onItemClick: (Int) -> Unit
+    onTabItem: (Int) -> Unit
 ) {
     val state = comicListViewModel.ui.observeAsState()
-    ScaffoldTopBar(onItemClick = {})
-    {
+    ScaffoldTopBar(onTabClick = {
+        onTabItem(it)
+    }) {
         LazyColumn(
             Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -44,5 +47,8 @@ fun ComicListScreen(
 @Preview
 @Composable
 fun MovieListScreenPreview() {
-    ComicListScreen()
+    ComicListScreen(
+        //onItemClick = {},
+        onTabItem = {}
+    )
 }
