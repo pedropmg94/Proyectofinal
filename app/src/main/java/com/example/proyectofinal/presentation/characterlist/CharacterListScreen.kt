@@ -8,7 +8,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.presentation.components.CardItem
@@ -30,6 +29,7 @@ fun CharacterListScreen(
         tabSelected = 0
     ) {
         Column(modifier = Modifier.padding(it)) {
+
             when(state.value) {
                 is UILoginState.Loading -> {
                     val uistate = state.value as UILoginState.Loading
@@ -40,19 +40,17 @@ fun CharacterListScreen(
                     val uistate = state.value as UILoginState.Loaded
                     ContentCharacterList(
                         onItemClick = onItemClick,
-                        onTabItem = onTabItem,
+                        //onTabItem = onTabItem,
                         characterList = uistate.items,
-                        favClick = { characterListViewModel.setFav(it)
-                     }
+                        favClick = { characterListViewModel.setFav(it) }
                     )
-
                 }
 
                 is UILoginState.Error -> {
                     val uistate = state.value as UILoginState.Error
                     ContentErrorState(
                         uistate.error ?: "Unknown error",
-                        onClickRetry = { characterListViewModel.retry() }
+                        onClickRetry = { characterListViewModel.retryCharacter() }
                     )
                 }
                 else -> {}
@@ -66,7 +64,7 @@ fun CharacterListScreen(
 @Composable
 fun ContentCharacterList(
     onItemClick: (Int) -> Unit,
-    onTabItem: (Int) -> Unit,
+    //onTabItem: (Int) -> Unit,
     characterList: List<CharacterModel>,
     favClick: (FavModel) -> Unit
 ) {

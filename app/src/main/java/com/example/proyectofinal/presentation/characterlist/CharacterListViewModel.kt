@@ -1,6 +1,5 @@
 package com.example.proyectofinal.presentation.characterlist
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,7 +42,7 @@ class CharacterListViewModel(
         }
     }
 
-    fun retry() {
+    fun retryCharacter() {
         _ui.value = UILoginState.Loading()
         getData()
     }
