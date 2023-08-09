@@ -21,7 +21,9 @@ fun SerieListScreen(
 
     ScaffoldTopBar(onTabClick = {
         onTabItem(it)
-    }) {
+    },
+        tabSelected = 2
+    ) {
         LazyColumn(
             Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally

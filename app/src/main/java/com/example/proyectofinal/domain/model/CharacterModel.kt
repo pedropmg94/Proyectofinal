@@ -4,5 +4,6 @@ data class CharacterModel (
     val id: Int,
     val name: String,
     val description: String,
-    val photoURL: String
+    val photoURL: String,
+    val favModel: FavModel
 )

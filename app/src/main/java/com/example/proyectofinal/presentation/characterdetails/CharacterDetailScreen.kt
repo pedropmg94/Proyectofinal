@@ -36,6 +36,7 @@ import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.presentation.ShowError
 import com.example.proyectofinal.presentation.components.StarComponent
+import com.example.proyectofinal.presentation.components.StarIcon
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -66,7 +67,7 @@ fun CharacterDetailScreen(
             ) {
                 CharacterName(character)
                 Spacer(modifier = Modifier.width(10.dp))
-                StarIcon()
+                //StarIcon(character.favModel, favClick = {characterDetailViewModel.setFav(it)})
             }
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -118,29 +119,6 @@ fun CharacterDescription(character: CharacterModel) {
         text = character.description,
         maxLines = 10,
         overflow = TextOverflow.Ellipsis
-    )
-}
-
-@Composable
-fun StarIcon() {
-
-    var starred by remember {
-        mutableStateOf(false)
-    }
-
-    AndroidView(
-        modifier = Modifier.clickable {
-            val newState = !starred
-            starred = newState
-        },
-        factory = { context ->
-            StarComponent(context).apply {
-                this.checked = starred
-            }
-        },
-        update = {
-            it.checked = starred
-        }
     )
 }
 

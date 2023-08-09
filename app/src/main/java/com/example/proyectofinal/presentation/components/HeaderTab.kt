@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HeaderTabLayout(
     tabs: List<String>,
+    tabSelected: Int,
     onTabSelected: (Int) -> Unit
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -33,7 +34,7 @@ fun HeaderTabLayout(
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 modifier = Modifier
-                    .tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    .tabIndicatorOffset(tabPositions[tabSelected]),
                 color = Color.LightGray
             )
         }
@@ -66,6 +67,7 @@ fun HeaderTabLayoutPreview() {
 
     HeaderTabLayout(
         tabs = tabs,
+        tabSelected = 0,
         //modifier = Modifier.fillMaxWidth(),
         onTabSelected = {}
     )

@@ -1,5 +1,10 @@
 package com.example.proyectofinal.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.proyectofinal.data.local.FavDataBase
+import com.example.proyectofinal.data.local.LocalDataSource
+import com.example.proyectofinal.data.local.model.LocalDataSourceImpl
 import com.example.proyectofinal.data.remote.MarvelAPI
 import com.example.proyectofinal.data.remote.RemoteDataSource
 import com.example.proyectofinal.data.remote.RemoteDataSourceImpl
@@ -88,12 +93,20 @@ val dataModule = module {
     }
 
     single<RemoteDataSource> { RemoteDataSourceImpl(get()) }
+    single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<MarvelAPI> { getMarvelAPI(get()) }
-    single<CharacterRepository> { CharacterRepositoryImpl(get()) }
+    single<CharacterRepository> { CharacterRepositoryImpl(get(), get()) }
     single<ComicRepository> { ComicRepositoryImpl(get()) }
     single<SerieRepository> { SerieRepositoryImpl(get()) }
 
+    single { getDatabase(get()) }
 }
 
 private fun getMarvelAPI(retrofit: Retrofit) =
     retrofit.create(MarvelAPI::class.java)
+
+private fun getDatabase(context: Context) : FavDataBase =
+    Room.databaseBuilder(
+        context,
+        FavDataBase::class.java, "favourite-db"
+    ).build()

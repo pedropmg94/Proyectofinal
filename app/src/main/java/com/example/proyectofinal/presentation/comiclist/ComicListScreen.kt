@@ -21,7 +21,9 @@ fun ComicListScreen(
     val state = comicListViewModel.ui.observeAsState()
     ScaffoldTopBar(onTabClick = {
         onTabItem(it)
-    }) {
+    },
+        tabSelected = 1
+    ) {
         LazyColumn(
             Modifier.padding(it),
             horizontalAlignment = Alignment.CenterHorizontally

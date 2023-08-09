@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.example.proyectofinal.R
+import com.example.proyectofinal.domain.model.CharacterModel
+import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.presentation.theme.globalElevation
 import com.example.proyectofinal.presentation.theme.globalPadding
 import com.example.proyectofinal.presentation.theme.globalRoundedCornerShape
@@ -36,7 +38,8 @@ fun <T : Any> CardItem(
     item: T,
     onClick: () -> Unit,
     nameProvider: (T) -> String,
-    photoURLProvider: (T) -> String
+    photoURLProvider: (T) -> String,
+    favClick: (FavModel) -> Unit = {}
 ) {
     Card(
         modifier = Modifier.padding(globalPadding),
@@ -61,9 +64,12 @@ fun <T : Any> CardItem(
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                StarIcon()
+                if (item is CharacterModel) {
+                    val character = item as CharacterModel
+                    StarIcon(character.favModel, favClick)
+                }
             }
-            ItemImage(photoURLProvider(item))
+            ItemImage(nameProvider(item), photoURLProvider(item))
         }
     }
 }
@@ -81,28 +87,28 @@ fun CharacterName(itemName: String) {
 }
 
 @Composable
-fun ItemImage(itemPhotoURL: String) {
+fun ItemImage(itemName: String, itemPhotoURL: String) {
     AsyncImage(
         placeholder = painterResource(id = R.drawable.marvellogo),
         error = painterResource(id = R.drawable.marvellogo),
         model = itemPhotoURL,
-        contentDescription = "",
+        contentDescription = itemName,
         contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize()
     )
 }
 
 @Composable
-fun StarIcon() {
+fun StarIcon(favModel: FavModel, favClick: (FavModel) -> Unit) {
 
     var starred by remember {
-        mutableStateOf(false)
+        mutableStateOf(favModel.favorite)
     }
 
     AndroidView(
         modifier = Modifier.clickable {
-            val newState = !starred
-            starred = newState
+            starred = !starred
+            favClick(favModel.copy(favorite = !favModel.favorite))
         },
         factory = { context ->
             StarComponent(context).apply {
