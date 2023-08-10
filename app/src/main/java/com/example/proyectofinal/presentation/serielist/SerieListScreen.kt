@@ -9,8 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.proyectofinal.domain.model.SerieModel
-import com.example.proyectofinal.presentation.comiclist.ContentComicList
-import com.example.proyectofinal.presentation.comiclist.UIComicState
 import com.example.proyectofinal.presentation.components.CardItem
 import com.example.proyectofinal.presentation.components.ContentErrorState
 import com.example.proyectofinal.presentation.components.ContentLoadingState

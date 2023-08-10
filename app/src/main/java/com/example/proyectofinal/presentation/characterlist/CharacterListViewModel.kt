@@ -22,8 +22,8 @@ class CharacterListViewModel(
         getData()
     }
 
-    private val _ui = MutableLiveData<UILoginState>(UILoginState.Loading())
-    val ui: LiveData<UILoginState> get() = _ui
+    private val _ui = MutableLiveData<UICharacterListState>(UICharacterListState.Loading())
+    val ui: LiveData<UICharacterListState> get() = _ui
 
 
     private fun getData() {
@@ -32,24 +32,24 @@ class CharacterListViewModel(
             try {
                 val characterList = getCharacterListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _ui.value = UILoginState.Loaded(items = characterList)
+                    _ui.value = UICharacterListState.Loaded(items = characterList)
                 }
             } catch(exception: Exception){
                 withContext(Dispatchers.Main) {
-                    _ui.value = UILoginState.Error(error = exception.message)
+                    _ui.value = UICharacterListState.Error(error = exception.message)
                 }
             }
         }
     }
 
     fun retryCharacter() {
-        _ui.value = UILoginState.Loading()
+        _ui.value = UICharacterListState.Loading()
         getData()
     }
 
     fun setFav(favModel: FavModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            val actualState = _ui.value as UILoginState.Loaded
+            val actualState = _ui.value as UICharacterListState.Loaded
             val list = actualState.items.toMutableList()
             list.forEachIndexed { index, characterModel ->
                 characterModel.takeIf { it.id == favModel.id }?.let {
@@ -58,7 +58,7 @@ class CharacterListViewModel(
             }
 
             withContext(Dispatchers.Main) {
-                _ui.value = UILoginState.Loaded(list)
+                _ui.value = UICharacterListState.Loaded(list)
             }
 
             favUseCase.invoke(favModel)
@@ -67,9 +67,9 @@ class CharacterListViewModel(
 
 }
 
-sealed class UILoginState() {
-    class Loading(): UILoginState()
-    class Loaded(val items: List<CharacterModel>): UILoginState()
-    class Error(val error: String? = null): UILoginState()
+sealed class UICharacterListState() {
+    class Loading(): UICharacterListState()
+    class Loaded(val items: List<CharacterModel>): UICharacterListState()
+    class Error(val error: String? = null): UICharacterListState()
 
 }

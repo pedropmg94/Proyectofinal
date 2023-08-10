@@ -12,5 +12,4 @@ class ComicRepositoryImpl(
         val remoteData = remoteDataSource.getComicList()
         return remoteData.data?.results?.map { it.toComicModel() } ?: listOf()
     }
-
 }

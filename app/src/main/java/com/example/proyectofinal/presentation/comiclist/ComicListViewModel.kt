@@ -4,14 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.ComicModel
 import com.example.proyectofinal.domain.usecase.GetComicListUseCase
-import com.example.proyectofinal.presentation.characterlist.UILoginState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class ComicListViewModel(
     private val getComicListUseCase: GetComicListUseCase

@@ -9,10 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.domain.model.ComicModel
-import com.example.proyectofinal.presentation.characterlist.CharacterListScreen
-import com.example.proyectofinal.presentation.characterlist.CharacterListViewModel
-import com.example.proyectofinal.presentation.characterlist.ContentCharacterList
-import com.example.proyectofinal.presentation.characterlist.UILoginState
 import com.example.proyectofinal.presentation.components.CardItem
 import com.example.proyectofinal.presentation.components.ContentErrorState
 import com.example.proyectofinal.presentation.components.ContentLoadingState

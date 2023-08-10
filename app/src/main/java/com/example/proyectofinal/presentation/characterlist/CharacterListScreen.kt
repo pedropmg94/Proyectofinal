@@ -31,13 +31,13 @@ fun CharacterListScreen(
         Column(modifier = Modifier.padding(it)) {
 
             when(state.value) {
-                is UILoginState.Loading -> {
-                    val uistate = state.value as UILoginState.Loading
+                is UICharacterListState.Loading -> {
+                    val uistate = state.value as UICharacterListState.Loading
                     ContentLoadingState()
                 }
 
-                is UILoginState.Loaded -> {
-                    val uistate = state.value as UILoginState.Loaded
+                is UICharacterListState.Loaded -> {
+                    val uistate = state.value as UICharacterListState.Loaded
                     ContentCharacterList(
                         onItemClick = onItemClick,
                         //onTabItem = onTabItem,
@@ -46,8 +46,8 @@ fun CharacterListScreen(
                     )
                 }
 
-                is UILoginState.Error -> {
-                    val uistate = state.value as UILoginState.Error
+                is UICharacterListState.Error -> {
+                    val uistate = state.value as UICharacterListState.Error
                     ContentErrorState(
                         uistate.error ?: "Unknown error",
                         onClickRetry = { characterListViewModel.retryCharacter() }
