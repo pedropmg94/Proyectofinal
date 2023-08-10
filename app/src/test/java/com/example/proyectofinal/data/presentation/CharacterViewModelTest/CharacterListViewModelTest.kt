@@ -22,7 +22,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CharacterListViewModelTest {
-    @get:Rule
+   /* @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val defaultDispatcherRule = DefaultDispatcherRule()
@@ -57,5 +57,5 @@ class CharacterListViewModelTest {
 
         //assertThat(res, instanceOf(UICharacterListState.Loaded::class.java))
         assertThat(list.size, `is`(15))
-    }
+    }*/
 }

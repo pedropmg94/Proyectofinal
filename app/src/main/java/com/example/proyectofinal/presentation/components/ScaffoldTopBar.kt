@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldTopBar(onTabClick: (Int) -> Unit, tabSelected: Int, screen: @Composable( )(PaddingValues) -> Unit) {
-    val tabs = listOf("Personajes", "Comics", "Series")
+    val tabs = listOf("Characters", "Comics", "Series")
 
     Scaffold(topBar = {
         HeaderTabLayout(
