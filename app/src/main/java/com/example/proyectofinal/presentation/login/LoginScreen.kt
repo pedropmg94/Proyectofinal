@@ -114,7 +114,7 @@ fun BackgroundImage() {
 @Composable
 fun LogoText() {
     Text(
-        text = "MARVEL",
+        text = "MARVELIX",
         style = TextStyle(
             fontWeight = FontWeight.Bold,
             fontSize = 50.sp,
