@@ -23,14 +23,15 @@ fun SerieListScreen(
 ) {
     val state = serieListViewModel.ui.observeAsState()
 
-    ScaffoldTopBar(onTabClick = {
-        onTabItem(it)
-    },
-        tabSelected = 2
+    ScaffoldTopBar(
+        onTabClick = {
+            onTabItem(it)
+        },
+        topBarText = AppTitle
     ) {
         Column(modifier = Modifier.padding(it)) {
 
-            when(state.value) {
+            when (state.value) {
                 is UISerieState.Loading -> {
                     val uistate = state.value as UISerieState.Loading
                     ContentLoadingState()
@@ -57,7 +58,6 @@ fun SerieListScreen(
 }
 
 
-
 @Composable
 fun ContentSerieList(
     //onItemClick: (Int) -> Unit
@@ -67,15 +67,15 @@ fun ContentSerieList(
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(serieList.size ?: 0) { i ->
+        items(serieList.size) { i ->
             val item = serieList.get(i)
-            item?.let { serie ->
+            item.let { serie ->
                 //println(character)
                 CardItem(
                     item = serie,
                     onClick = { /*TODO*/ },
-                    nameProvider = {serie.title},
-                    photoURLProvider = {serie.photoURL}
+                    nameProvider = { serie.title },
+                    photoURLProvider = { serie.photoURL }
                 )
             }
         }
@@ -91,3 +91,5 @@ fun MovieListScreenPreview() {
         onTabItem = {}
     )
 }
+
+private const val AppTitle = "MARVELIX"

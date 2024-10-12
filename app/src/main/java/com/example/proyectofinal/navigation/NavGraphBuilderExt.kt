@@ -11,11 +11,11 @@ import com.example.proyectofinal.presentation.serielist.SerieListScreen
 
 fun NavGraphBuilder.addLoginScreen(navController: NavHostController) {
     composable(Screen.LoginScreen.route) {
-        LoginScreen (
+        LoginScreen(
             onLoginSuccess = {
                 navController.navigate(Screen.CharacterListScreen.route)
             }
-                )
+        )
     }
 }
 
@@ -24,8 +24,8 @@ fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
         CharacterListScreen(
             onItemClick = { characterID ->
                 navController.navigate("${Screen.CharacterDetailScreen.route}/$characterID")
-                          },
-            onTabItem = {tabIndex ->
+            },
+            onTabItem = { tabIndex ->
                 when (tabIndex) {
                     0 -> navController.navigate(Screen.CharacterListScreen.route)
                     1 -> navController.navigate(Screen.ComicListScreen.route)
@@ -40,7 +40,7 @@ fun NavGraphBuilder.addCharacterDetailScreen() {
     composable(
         route = Screen.CharacterDetailScreen.route + "/{characterID}",
         arguments = Screen.CharacterDetailScreen.arguments
-    ) {navBackStackEntry ->
+    ) { navBackStackEntry ->
         val idString = navBackStackEntry.arguments?.getString("characterID")
         val id = idString?.toIntOrNull() ?: 0
         CharacterDetailScreen(id = id)
@@ -50,7 +50,7 @@ fun NavGraphBuilder.addCharacterDetailScreen() {
 fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
     composable(Screen.ComicListScreen.route) {
         ComicListScreen(
-            onTabItem = {tabIndex ->
+            onTabItem = { tabIndex ->
                 when (tabIndex) {
                     0 -> navController.navigate(Screen.CharacterListScreen.route)
                     1 -> navController.navigate(Screen.ComicListScreen.route)
@@ -64,7 +64,7 @@ fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
 fun NavGraphBuilder.addSerieListScreen(navController: NavHostController) {
     composable(Screen.SerieListScreen.route) {
         SerieListScreen(
-            onTabItem = {tabIndex ->
+            onTabItem = { tabIndex ->
                 when (tabIndex) {
                     0 -> navController.navigate(Screen.CharacterListScreen.route)
                     1 -> navController.navigate(Screen.ComicListScreen.route)

@@ -23,16 +23,17 @@ fun CharacterListScreen(
     onTabItem: (Int) -> Unit
 ) {
     val state = characterListViewModel.ui.observeAsState()
-    ScaffoldTopBar(onTabClick = {
-        onTabItem(it)
-    },
-        tabSelected = 0
+    ScaffoldTopBar(
+        onTabClick = {
+            onTabItem(it)
+        },
+        topBarText = AppTitle
     ) {
         Column(modifier = Modifier.padding(it)) {
 
-            when(state.value) {
+            when (state.value) {
                 is UICharacterListState.Loading -> {
-                    val uistate = state.value as UICharacterListState.Loading
+//                    val uistate = state.value as UICharacterListState.Loading
                     ContentLoadingState()
                 }
 
@@ -53,12 +54,12 @@ fun CharacterListScreen(
                         onClickRetry = { characterListViewModel.retryCharacter() }
                     )
                 }
+
                 else -> {}
             }
         }
     }
 }
-
 
 
 @Composable
@@ -68,22 +69,22 @@ fun ContentCharacterList(
     characterList: List<CharacterModel>,
     favClick: (FavModel) -> Unit
 ) {
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            items(characterList.size ?: 0) { i ->
-                val item = characterList.get(i)
-                item?.let { character ->
-                    CardItem(
-                        item = character,
-                        onClick = { onItemClick.invoke(character.id) },
-                        nameProvider = {character.name},
-                        photoURLProvider = {character.photoURL},
-                        favClick = favClick
-                    )
-                }
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        items(characterList.size) { i ->
+            val item = characterList.get(i)
+            item.let { character ->
+                CardItem(
+                    item = character,
+                    onClick = { onItemClick.invoke(character.id) },
+                    nameProvider = { character.name },
+                    photoURLProvider = { character.photoURL },
+                    favClick = favClick
+                )
             }
         }
+    }
 }
 
 
@@ -95,3 +96,5 @@ fun MovieListScreenPreview() {
         onTabItem = {}
     )
 }
+
+private const val AppTitle = "MARVELIX"
