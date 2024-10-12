@@ -22,14 +22,15 @@ fun ComicListScreen(
     onTabItem: (Int) -> Unit
 ) {
     val state = comicListViewModel.ui.observeAsState()
-    ScaffoldTopBar(onTabClick = {
-        onTabItem(it)
-    },
-        tabSelected = 1
+    ScaffoldTopBar(
+        onTabClick = {
+            onTabItem(it)
+        },
+        topBarText = AppTitle
     ) {
         Column(modifier = Modifier.padding(it)) {
 
-            when(state.value) {
+            when (state.value) {
                 is UIComicState.Loading -> {
                     val uistate = state.value as UIComicState.Loading
                     ContentLoadingState()
@@ -47,6 +48,7 @@ fun ComicListScreen(
                         onClickRetry = { comicListViewModel.retryComic() }
                     )
                 }
+
                 else -> {}
             }
 
@@ -64,21 +66,20 @@ fun ContentComicList(
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(comicList.size ?: 0) { i ->
+        items(comicList.size) { i ->
             val item = comicList.get(i)
-            item?.let { comic ->
+            item.let { comic ->
                 //println(comic)
                 CardItem(
                     item = comic,
                     onClick = { /*TODO*/ },
-                    nameProvider = {comic.title},
-                    photoURLProvider = {comic.photoURL}
+                    nameProvider = { comic.title },
+                    photoURLProvider = { comic.photoURL }
                 )
             }
         }
     }
 }
-
 
 
 @Preview
@@ -89,3 +90,5 @@ fun MovieListScreenPreview() {
         onTabItem = {}
     )
 }
+
+private const val AppTitle = "MARVELIX"

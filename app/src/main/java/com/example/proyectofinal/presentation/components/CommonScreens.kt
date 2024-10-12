@@ -2,7 +2,6 @@ package com.example.proyectofinal.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -29,7 +28,7 @@ fun ContentErrorState(error: String, onClickRetry: () -> Unit) {
         .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        Column() {
+        Column {
             Text(text = error)
             Button(onClick = { onClickRetry() }) {
                 Text(text = "Retry")
