@@ -10,6 +10,6 @@ class ComicRepositoryImpl(
 ): ComicRepository {
     override suspend fun getComicList(): List<ComicModel> {
         val remoteData = remoteDataSource.getComicList()
-        return remoteData.data?.results?.map { it.toComicModel() } ?: listOf()
+        return remoteData.data.results.map { it.toComicModel() } ?: listOf()
     }
 }
