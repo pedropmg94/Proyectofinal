@@ -11,40 +11,37 @@ import com.example.proyectofinal.domain.model.SerieModel
 
 fun CharacterResult.toCharacterModel(favModel: FavModel) = CharacterModel(
     id = id ?: 0,
-    name = name ?: "",
-    //description = description ?: "",
-    description = if (description.isNullOrEmpty()) "No description" else description,
+    name = name.orEmpty(),
+    description = description.orEmpty(),
     photoURL =
-    "${thumbnail?.path ?: ""}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}",
+    "${thumbnail?.path.orEmpty()}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}",
     favModel = favModel
 )
 
 fun ComicResult.toComicModel() = ComicModel(
     id = id ?: 0,
-    title = title ?: "",
-    description = if (description.isNullOrEmpty()) "No description" else description,
+    title = title.orEmpty(),
+    description = description.orEmpty(),
     //photoURL = "${thumbnail?.path ?: ""}.${thumbnail?.extension ?: ""}" ?: ""
     photoURL =
-    "${thumbnail?.path ?: ""}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}"
-
+    "${thumbnail?.path.orEmpty()}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}"
 )
 
 fun SerieResult.toSerieModel() = SerieModel(
     id = id ?: 0,
-    title = title ?: "",
-    description = if (description.isNullOrEmpty()) "No description" else description,
+    title = title.orEmpty(),
+    description = description.orEmpty(),
     //photoURL = "${thumbnail?.path ?: ""}.${thumbnail?.extension ?: ""}" ?: ""
     photoURL =
-    "${thumbnail?.path ?: ""}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}"
-
+    "${thumbnail?.path.orEmpty()}${if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) "." else ""}${thumbnail?.extension ?: ""}"
 )
 
 fun FavLocal.toFavModel() = FavModel(
-    id = id ?: 0,
-    favorite = favorite ?: false
+    id = id,
+    favorite = favorite
 )
 
 fun FavModel.toFavLocal() = FavLocal(
-    id = id ?: 0,
-    favorite = favorite ?: false
+    id = id,
+    favorite = favorite
 )
