@@ -1,13 +1,13 @@
-package com.example.proyectofinal.navigation
+package com.example.proyectofinal.presentation.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.example.proyectofinal.presentation.characterdetails.CharacterDetailScreen
-import com.example.proyectofinal.presentation.characterlist.CharacterListScreen
-import com.example.proyectofinal.presentation.comiclist.ComicListScreen
-import com.example.proyectofinal.presentation.login.LoginScreen
-import com.example.proyectofinal.presentation.serielist.SerieListScreen
+import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailScreen
+import com.example.proyectofinal.presentation.screens.characterlist.CharacterListScreen
+import com.example.proyectofinal.presentation.screens.comiclist.ComicListScreen
+import com.example.proyectofinal.presentation.screens.login.LoginScreen
+import com.example.proyectofinal.presentation.screens.serielist.SerieListScreen
 
 fun NavGraphBuilder.addLoginScreen(navController: NavHostController) {
     composable(Screen.LoginScreen.route) {

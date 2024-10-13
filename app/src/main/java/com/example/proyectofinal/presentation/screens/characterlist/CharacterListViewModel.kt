@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.characterlist
+package com.example.proyectofinal.presentation.screens.characterlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +8,10 @@ import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.domain.usecase.FavUseCase
 import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class CharacterListViewModel(
     private val getCharacterListUseCase: GetCharacterListUseCase,
@@ -22,8 +22,8 @@ class CharacterListViewModel(
         getData()
     }
 
-    private val _ui = MutableLiveData<UICharacterListState>(UICharacterListState.Loading())
-    val ui: LiveData<UICharacterListState> get() = _ui
+    private val _ui = MutableLiveData<ScreenUIState<List<CharacterModel>>>(ScreenUIState.Loading)
+    val ui: LiveData<ScreenUIState<List<CharacterModel>>> get() = _ui
 
 
     private fun getData() {
@@ -32,25 +32,25 @@ class CharacterListViewModel(
             try {
                 val characterList = getCharacterListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _ui.value = UICharacterListState.Loaded(items = characterList)
+                    _ui.value = ScreenUIState.Success(data = characterList)
                 }
             } catch(exception: Exception){
                 withContext(Dispatchers.Main) {
-                    _ui.value = UICharacterListState.Error(error = exception.message)
+                    _ui.value = ScreenUIState.Error(error = exception.message)
                 }
             }
         }
     }
 
     fun retryCharacter() {
-        _ui.value = UICharacterListState.Loading()
+        _ui.value = ScreenUIState.Loading
         getData()
     }
 
     fun setFav(favModel: FavModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            val actualState = _ui.value as UICharacterListState.Loaded
-            val list = actualState.items.toMutableList()
+            val actualState = _ui.value as ScreenUIState.Success
+            val list = actualState.data.toMutableList()
             list.forEachIndexed { index, characterModel ->
                 characterModel.takeIf { it.id == favModel.id }?.let {
                     list[index] = it.copy(favModel = favModel)
@@ -58,18 +58,11 @@ class CharacterListViewModel(
             }
 
             withContext(Dispatchers.Main) {
-                _ui.value = UICharacterListState.Loaded(list)
+                _ui.value = ScreenUIState.Success(list)
             }
 
             favUseCase.invoke(favModel)
         }
     }
-
-}
-
-sealed class UICharacterListState() {
-    class Loading(): UICharacterListState()
-    class Loaded(val items: List<CharacterModel>): UICharacterListState()
-    class Error(val error: String? = null): UICharacterListState()
 
 }

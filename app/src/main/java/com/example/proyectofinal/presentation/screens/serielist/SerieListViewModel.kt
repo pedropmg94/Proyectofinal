@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.serielist
+package com.example.proyectofinal.presentation.screens.serielist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

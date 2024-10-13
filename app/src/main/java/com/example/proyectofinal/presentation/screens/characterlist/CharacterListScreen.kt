@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.characterlist
+package com.example.proyectofinal.presentation.screens.characterlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,10 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
-import com.example.proyectofinal.presentation.components.CardItem
-import com.example.proyectofinal.presentation.components.ContentErrorState
-import com.example.proyectofinal.presentation.components.ContentLoadingState
-import com.example.proyectofinal.presentation.components.ScaffoldTopBar
+import com.example.proyectofinal.presentation.common.ScreenUIState
+import com.example.proyectofinal.presentation.common.components.CardItem
+import com.example.proyectofinal.presentation.common.components.ContentErrorState
+import com.example.proyectofinal.presentation.common.components.ContentLoadingState
+import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -32,25 +33,24 @@ fun CharacterListScreen(
         Column(modifier = Modifier.padding(it)) {
 
             when (state.value) {
-                is UICharacterListState.Loading -> {
-//                    val uistate = state.value as UICharacterListState.Loading
+                is ScreenUIState.Loading -> {
                     ContentLoadingState()
                 }
 
-                is UICharacterListState.Loaded -> {
-                    val uistate = state.value as UICharacterListState.Loaded
+                is ScreenUIState.Success -> {
+                    val uistate = state.value as ScreenUIState.Success
                     ContentCharacterList(
                         onItemClick = onItemClick,
                         //onTabItem = onTabItem,
-                        characterList = uistate.items,
+                        characterList = uistate.data,
                         favClick = { characterListViewModel.setFav(it) }
                     )
                 }
 
-                is UICharacterListState.Error -> {
-                    val uistate = state.value as UICharacterListState.Error
+                is ScreenUIState.Error -> {
+                    val uistate = state.value as ScreenUIState.Error
                     ContentErrorState(
-                        uistate.error ?: "Unknown error",
+                        error = uistate.error ?: "Unknown error",
                         onClickRetry = { characterListViewModel.retryCharacter() }
                     )
                 }
@@ -60,7 +60,6 @@ fun CharacterListScreen(
         }
     }
 }
-
 
 @Composable
 fun ContentCharacterList(
@@ -86,7 +85,6 @@ fun ContentCharacterList(
         }
     }
 }
-
 
 @Preview
 @Composable

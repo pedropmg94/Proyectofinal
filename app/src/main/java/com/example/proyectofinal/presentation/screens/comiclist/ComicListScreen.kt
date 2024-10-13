@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.comiclist
+package com.example.proyectofinal.presentation.screens.comiclist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,10 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.domain.model.ComicModel
-import com.example.proyectofinal.presentation.components.CardItem
-import com.example.proyectofinal.presentation.components.ContentErrorState
-import com.example.proyectofinal.presentation.components.ContentLoadingState
-import com.example.proyectofinal.presentation.components.ScaffoldTopBar
+import com.example.proyectofinal.presentation.common.ScreenUIState
+import com.example.proyectofinal.presentation.common.components.CardItem
+import com.example.proyectofinal.presentation.common.components.ContentErrorState
+import com.example.proyectofinal.presentation.common.components.ContentLoadingState
+import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -31,20 +32,19 @@ fun ComicListScreen(
         Column(modifier = Modifier.padding(it)) {
 
             when (state.value) {
-                is UIComicState.Loading -> {
-                    val uistate = state.value as UIComicState.Loading
+                is ScreenUIState.Loading -> {
                     ContentLoadingState()
                 }
 
-                is UIComicState.Loaded -> {
-                    val uistate = state.value as UIComicState.Loaded
-                    ContentComicList(comicList = uistate.items)
+                is ScreenUIState.Success -> {
+                    val uiState = state.value as ScreenUIState.Success
+                    ContentComicList(comicList = uiState.data)
                 }
 
-                is UIComicState.Error -> {
-                    val uistate = state.value as UIComicState.Error
+                is ScreenUIState.Error -> {
+                    val uiState = state.value as ScreenUIState.Error
                     ContentErrorState(
-                        uistate.error ?: "Unknown error",
+                        error = uiState.error ?: "Unknown error",
                         onClickRetry = { comicListViewModel.retryComic() }
                     )
                 }

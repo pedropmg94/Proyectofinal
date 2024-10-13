@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.components
+package com.example.proyectofinal.presentation.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -119,14 +120,3 @@ private fun StarIcon(
         )
     }
 }
-
-@Composable
-fun <T : Any> ItemCardPreview(item: T) {
-    CardItem(
-        item = item,
-        onClick = {},
-        nameProvider = { "Nombre" },
-        photoURLProvider = { "URL de la foto" }
-    )
-}
-

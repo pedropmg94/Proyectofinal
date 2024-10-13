@@ -1,4 +1,4 @@
-package com.example.proyectofinal.navigation
+package com.example.proyectofinal.presentation.navigation
 
 import androidx.navigation.NamedNavArgument
 

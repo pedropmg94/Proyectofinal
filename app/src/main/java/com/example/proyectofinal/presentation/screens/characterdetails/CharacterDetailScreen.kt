@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.characterdetails
+package com.example.proyectofinal.presentation.screens.characterdetails
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.proyectofinal.R
-import com.example.proyectofinal.presentation.components.ScaffoldTopBar
+import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
