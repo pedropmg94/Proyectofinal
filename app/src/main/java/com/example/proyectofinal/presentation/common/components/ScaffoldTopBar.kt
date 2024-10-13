@@ -1,4 +1,4 @@
-package com.example.proyectofinal.presentation.components
+package com.example.proyectofinal.presentation.common.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api

@@ -1,24 +1,6 @@
-package com.example.proyectofinal.data.presentation.CharacterViewModelTest
+package com.example.proyectofinal.data.presentation.characterViewModelTest
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.proyectofinal.data.testutil.CharacterTestDataBuilder
-import com.example.proyectofinal.domain.usecase.FavUseCase
-import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
-import com.example.proyectofinal.presentation.characterlist.CharacterListViewModel
-import com.example.proyectofinal.presentation.characterlist.UICharacterListState
-import com.keepcoding.androidsuperpoderes.testutil.DefaultDispatcherRule
-import com.keepcoding.androidsuperpoderes.testutil.getOrAwaitValue
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CharacterListViewModelTest {

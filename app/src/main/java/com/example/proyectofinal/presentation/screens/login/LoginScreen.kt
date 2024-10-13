@@ -1,7 +1,5 @@
-package com.example.proyectofinal.presentation.login
+package com.example.proyectofinal.presentation.screens.login
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +25,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,7 +40,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.proyectofinal.R
-import com.example.proyectofinal.presentation.serielist.SerieListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -51,17 +47,6 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit,
     loginViewModel: LoginViewModel = koinViewModel(),
 ) {
-    val state = loginViewModel.ui.observeAsState()
-
-    when(state.value) {
-        is UILoginState.Loaded -> Content(onLoginSuccess)
-        else -> {}
-    }
-
-}
-
-@Composable
-fun Content(onLoginSuccess: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
