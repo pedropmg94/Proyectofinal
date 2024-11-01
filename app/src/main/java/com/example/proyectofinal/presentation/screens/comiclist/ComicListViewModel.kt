@@ -4,23 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinal.domain.model.ComicModel
 import com.example.proyectofinal.domain.usecase.GetComicListUseCase
-import com.example.proyectofinal.presentation.common.ScreenUIState
+import com.example.proyectofinal.presentation.common.ScreenUIState2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ComicListViewModel(
     private val getComicListUseCase: GetComicListUseCase
-    ): ViewModel() {
+): ViewModel() {
 
     init {
         getData()
     }
 
-    private val _ui = MutableLiveData<ScreenUIState<List<ComicModel>>>(ScreenUIState.Loading)
-    val ui: LiveData<ScreenUIState<List<ComicModel>>> get() = _ui
+    private val _state = MutableLiveData(ComicListState())
+    val state: LiveData<ComicListState> get() = _state
 
     private fun getData() {
 
@@ -28,18 +27,27 @@ class ComicListViewModel(
             try {
                 val comicList = getComicListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _ui.value = ScreenUIState.Success(data = comicList)
+                    _state.value = ComicListState(
+                        comicUIState = ScreenUIState2.Success,
+                        comicList = comicList
+                    )
                 }
             } catch(exception: Exception){
                 withContext(Dispatchers.Main) {
-                    _ui.value = ScreenUIState.Error(error = exception.message)
+                    _state.value = ComicListState(
+                        comicUIState = ScreenUIState2.Error(error = exception.message.orEmpty()),
+                        comicList = emptyList()
+                    )
                 }
             }
         }
     }
 
     fun retryComic() {
-        _ui.value = ScreenUIState.Loading
+        _state.value = ComicListState(
+            comicUIState = ScreenUIState2.Loading,
+            comicList = emptyList()
+        )
         getData()
     }
 }
