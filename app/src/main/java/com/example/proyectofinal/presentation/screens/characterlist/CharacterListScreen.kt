@@ -12,8 +12,8 @@ import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.presentation.common.ScreenUIState
 import com.example.proyectofinal.presentation.common.components.CardItem
-import com.example.proyectofinal.presentation.common.components.ContentErrorState
-import com.example.proyectofinal.presentation.common.components.ContentLoadingState
+import com.example.proyectofinal.presentation.common.components.ErrorView
+import com.example.proyectofinal.presentation.common.components.LoadingView
 import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -34,7 +34,7 @@ fun CharacterListScreen(
 
             when (state.value) {
                 is ScreenUIState.Loading -> {
-                    ContentLoadingState()
+                    LoadingView()
                 }
 
                 is ScreenUIState.Success -> {
@@ -49,7 +49,7 @@ fun CharacterListScreen(
 
                 is ScreenUIState.Error -> {
                     val uistate = state.value as ScreenUIState.Error
-                    ContentErrorState(
+                    ErrorView(
                         error = uistate.error ?: "Unknown error",
                         onClickRetry = { characterListViewModel.retryCharacter() }
                     )

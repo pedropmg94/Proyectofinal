@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.proyectofinal.domain.model.SerieModel
 import com.example.proyectofinal.presentation.common.components.CardItem
-import com.example.proyectofinal.presentation.common.components.ContentErrorState
-import com.example.proyectofinal.presentation.common.components.ContentLoadingState
+import com.example.proyectofinal.presentation.common.components.ErrorView
+import com.example.proyectofinal.presentation.common.components.LoadingView
 import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,7 +33,7 @@ fun SerieListScreen(
 
             when (state.value) {
                 is UISerieState.Loading -> {
-                    ContentLoadingState()
+                    LoadingView()
                 }
 
                 is UISerieState.Loaded -> {
@@ -43,7 +43,7 @@ fun SerieListScreen(
 
                 is UISerieState.Error -> {
                     val uiState = state.value as UISerieState.Error
-                    ContentErrorState(
+                    ErrorView(
                         uiState.error ?: "Unknown error",
                         onClickRetry = { serieListViewModel.retrySerie() }
                     )
@@ -80,7 +80,6 @@ fun ContentSerieList(
         }
     }
 }
-
 
 @Preview
 @Composable
