@@ -1,6 +1,5 @@
 package com.example.proyectofinal.data.repository
 
-import android.util.Log
 import com.example.proyectofinal.data.local.LocalDataSource
 import com.example.proyectofinal.data.mappers.toCharacterModel
 import com.example.proyectofinal.data.mappers.toFavLocal
@@ -16,7 +15,7 @@ class CharacterRepositoryImpl(
     override suspend fun getCharacterList(): List<CharacterModel> {
         val remoteData = remoteDataSource.getCharacterList()
         val favList = localDataSource.getFav().map { it.toFavModel() }
-        return remoteData.data?.results?.map { result ->
+        return remoteData.data?.results?.mapNotNull { result ->
             val fav = favList.find { it.id == result.id } ?: FavModel(result.id ?: 0, false)
             result.toCharacterModel(fav)
         } ?: listOf()

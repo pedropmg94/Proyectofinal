@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -64,7 +64,7 @@ private fun CharacterImage(photoURL: String?) {
 @Composable
 private fun CharacterDescription(description: String?) {
     Text(
-        text = description ?: ErrorDescriptionText,
+        text = if (description.isNullOrEmpty()) ErrorDescriptionText else description,
         modifier = Modifier.padding(horizontal = 8.dp),
         maxLines = 10,
         overflow = TextOverflow.Ellipsis,
