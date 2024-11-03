@@ -10,6 +10,6 @@ class SerieRepositoryImpl(
 ): SerieRepository {
     override suspend fun getSerieList(): List<SerieModel> {
         val remoteData = remoteDataSource.getSerieList()
-        return remoteData.data?.results?.map { it.toSerieModel() } ?: listOf()
+        return remoteData.data?.results?.mapNotNull { it.toSerieModel() } ?: listOf()
     }
 }
