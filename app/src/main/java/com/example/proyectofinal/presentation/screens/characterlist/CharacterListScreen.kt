@@ -3,27 +3,26 @@ package com.example.proyectofinal.presentation.screens.characterlist
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.domain.model.CharacterModel
-import com.example.proyectofinal.domain.model.FavModel
-import com.example.proyectofinal.presentation.common.ScreenUIState
+import com.example.proyectofinal.presentation.common.Action
+import com.example.proyectofinal.presentation.common.ScreenUIState2
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
 import com.example.proyectofinal.presentation.common.components.LoadingView
 import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CharacterListScreen(
-    characterListViewModel: CharacterListViewModel = koinViewModel(),
+    state: CharacterListState,
     onItemClick: (Int) -> Unit,
-    onTabItem: (Int) -> Unit
+    onTabItem: (Int) -> Unit,
+    onActions: (Action) -> Unit
 ) {
-    val state = characterListViewModel.ui.observeAsState()
     ScaffoldTopBar(
         onTabClick = {
             onTabItem(it)
@@ -31,31 +30,33 @@ fun CharacterListScreen(
         topBarText = AppTitle
     ) {
         Column(modifier = Modifier.padding(it)) {
-
-            when (state.value) {
-                is ScreenUIState.Loading -> {
+            when (state.characterUIState) {
+                is ScreenUIState2.Loading -> {
                     LoadingView()
                 }
 
-                is ScreenUIState.Success -> {
-                    val uistate = state.value as ScreenUIState.Success
+                is ScreenUIState2.Success -> {
                     ContentCharacterList(
                         onItemClick = onItemClick,
-                        //onTabItem = onTabItem,
-                        characterList = uistate.data,
-                        favClick = { characterListViewModel.setFav(it) }
+                        characterList = state.characterList,
+                        onActions = {
+                            onActions(
+                                CharacterListScreenAction.OnTryAgainClick
+                            )
+                        }
                     )
                 }
 
-                is ScreenUIState.Error -> {
-                    val uistate = state.value as ScreenUIState.Error
+                is ScreenUIState2.Error -> {
                     ErrorView(
-                        error = uistate.error ?: "Unknown error",
-                        onClickRetry = { characterListViewModel.retryCharacter() }
+                        error = state.characterUIState.error,
+                        onClickRetry = {
+                            onActions(
+                                CharacterListScreenAction.OnTryAgainClick
+                            )
+                        }
                     )
                 }
-
-                else -> {}
             }
         }
     }
@@ -64,24 +65,24 @@ fun CharacterListScreen(
 @Composable
 fun ContentCharacterList(
     onItemClick: (Int) -> Unit,
-    //onTabItem: (Int) -> Unit,
     characterList: List<CharacterModel>,
-    favClick: (FavModel) -> Unit
+    onActions: (Action) -> Unit
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(characterList.size) { i ->
-            val item = characterList.get(i)
-            item.let { character ->
-                CardItem(
-                    item = character,
-                    onClick = { onItemClick.invoke(character.id) },
-                    nameProvider = { character.name },
-                    photoURLProvider = { character.photoURL },
-                    favClick = favClick
-                )
-            }
+        items(characterList) { character ->
+            CardItem(
+                item = character,
+                onClick = { onItemClick.invoke(character.id) },
+                nameProvider = { character.name },
+                photoURLProvider = { character.photoURL },
+                favClick = {
+                    onActions(
+                        CharacterListScreenAction.OnFavCharacterClick(character.favModel)
+                    )
+                }
+            )
         }
     }
 }
@@ -90,8 +91,10 @@ fun ContentCharacterList(
 @Composable
 fun MovieListScreenPreview() {
     CharacterListScreen(
+        state = CharacterListState(),
         onItemClick = {},
-        onTabItem = {}
+        onTabItem = {},
+        onActions = {}
     )
 }
 

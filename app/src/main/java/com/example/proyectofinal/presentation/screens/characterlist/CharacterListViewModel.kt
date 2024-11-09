@@ -2,13 +2,13 @@ package com.example.proyectofinal.presentation.screens.characterlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.domain.usecase.FavUseCase
 import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
-import com.example.proyectofinal.presentation.common.ScreenUIState
+import com.example.proyectofinal.presentation.common.Action
+import com.example.proyectofinal.presentation.common.BaseViewModel
+import com.example.proyectofinal.presentation.common.ScreenUIState2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,49 +16,63 @@ import kotlinx.coroutines.withContext
 class CharacterListViewModel(
     private val getCharacterListUseCase: GetCharacterListUseCase,
     private val favUseCase: FavUseCase
-    ): ViewModel() {
+    ): BaseViewModel() {
+
+    private val _state = MutableLiveData(CharacterListState())
+    val state: LiveData<CharacterListState> get() = _state
 
     init {
         getData()
     }
 
-    private val _ui = MutableLiveData<ScreenUIState<List<CharacterModel>>>(ScreenUIState.Loading)
-    val ui: LiveData<ScreenUIState<List<CharacterModel>>> get() = _ui
-
+    override fun handleAction(action: Action) {
+        when (action) {
+            is CharacterListScreenAction.OnFavCharacterClick -> setFav(action.favModel)
+            is CharacterListScreenAction.OnTryAgainClick -> tryAgain()
+        }
+    }
 
     private fun getData() {
-
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val characterList = getCharacterListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _ui.value = ScreenUIState.Success(data = characterList)
+                    _state.value = _state.value?.copy(
+                        characterUIState = ScreenUIState2.Success,
+                        characterList = characterList
+                    )
                 }
-            } catch(exception: Exception){
+            } catch(exception: Exception) {
                 withContext(Dispatchers.Main) {
-                    _ui.value = ScreenUIState.Error(error = exception.message)
+                    _state.value = _state.value?.copy(
+                        characterUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
+                    )
                 }
             }
         }
     }
 
-    fun retryCharacter() {
-        _ui.value = ScreenUIState.Loading
+    private fun tryAgain() {
+        _state.value = _state.value?.copy(
+            characterUIState = ScreenUIState2.Loading
+        )
         getData()
     }
 
-    fun setFav(favModel: FavModel) {
+    private fun setFav(favModel: FavModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            val actualState = _ui.value as ScreenUIState.Success
-            val list = actualState.data.toMutableList()
-            list.forEachIndexed { index, characterModel ->
-                characterModel.takeIf { it.id == favModel.id }?.let {
-                    list[index] = it.copy(favModel = favModel)
+            val updatedList = _state.value?.characterList?.map { characterModel ->
+                if (characterModel.id == favModel.id) {
+                    characterModel.copy(favModel = favModel)
+                } else {
+                    characterModel
                 }
             }
 
             withContext(Dispatchers.Main) {
-                _ui.value = ScreenUIState.Success(list)
+                _state.value = _state.value?.copy(
+                    characterList = updatedList ?: emptyList()
+                )
             }
 
             favUseCase.invoke(favModel)
