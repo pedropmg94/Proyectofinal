@@ -3,6 +3,7 @@ package com.example.proyectofinal.presentation.screens.comiclist
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -62,17 +63,13 @@ fun ContentComicList(
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(comicList.size) { i ->
-            val item = comicList.get(i)
-            item.let { comic ->
-                //println(comic)
-                CardItem(
-                    item = comic,
-                    onClick = { /*TODO*/ },
-                    nameProvider = { comic.title },
-                    photoURLProvider = { comic.photoURL }
-                )
-            }
+        items(comicList) { comic ->
+            CardItem(
+                item = comic,
+                onClick = { /*TODO*/ },
+                nameProvider = { comic.title },
+                photoURLProvider = { comic.photoURL }
+            )
         }
     }
 }

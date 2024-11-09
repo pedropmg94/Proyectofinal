@@ -14,12 +14,12 @@ class ComicListViewModel(
     private val getComicListUseCase: GetComicListUseCase
 ): ViewModel() {
 
+    private val _state = MutableLiveData(ComicListState())
+    val state: LiveData<ComicListState> get() = _state
+
     init {
         getData()
     }
-
-    private val _state = MutableLiveData(ComicListState())
-    val state: LiveData<ComicListState> get() = _state
 
     private fun getData() {
 

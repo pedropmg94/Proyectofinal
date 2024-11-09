@@ -7,7 +7,7 @@ sealed class ScreenUIState<out T>: UIState {
 }
 
 sealed class ScreenUIState2 : UIState {
-    object Loading : ScreenUIState2()
+    data object Loading : ScreenUIState2()
     data class Error(val error: String = "Unknown error") : ScreenUIState2()
-    object Success : ScreenUIState2()
+    data object Success : ScreenUIState2()
 }
