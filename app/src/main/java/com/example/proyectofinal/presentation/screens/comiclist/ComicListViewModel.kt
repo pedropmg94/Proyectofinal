@@ -27,16 +27,15 @@ class ComicListViewModel(
             try {
                 val comicList = getComicListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _state.value = ComicListState(
+                    _state.value = _state.value?.copy(
                         comicUIState = ScreenUIState2.Success,
                         comicList = comicList
                     )
                 }
             } catch(exception: Exception){
                 withContext(Dispatchers.Main) {
-                    _state.value = ComicListState(
-                        comicUIState = ScreenUIState2.Error(error = exception.message.orEmpty()),
-                        comicList = emptyList()
+                    _state.value = _state.value?.copy(
+                        comicUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
                     )
                 }
             }
@@ -44,9 +43,8 @@ class ComicListViewModel(
     }
 
     fun retryComic() {
-        _state.value = ComicListState(
-            comicUIState = ScreenUIState2.Loading,
-            comicList = emptyList()
+        _state.value = _state.value?.copy(
+            comicUIState = ScreenUIState2.Loading
         )
         getData()
     }
