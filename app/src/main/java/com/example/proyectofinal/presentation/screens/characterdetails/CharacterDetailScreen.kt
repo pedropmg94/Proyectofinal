@@ -18,26 +18,30 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.proyectofinal.R
-import com.example.proyectofinal.presentation.common.components.ScaffoldTopBar
+import com.example.proyectofinal.presentation.common.components.ScaffoldView
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CharacterDetailScreen(
     id: Int,
-    characterDetailViewModel: CharacterDetailViewModel = koinViewModel()
+    characterDetailViewModel: CharacterDetailViewModel = koinViewModel(),
+    onTabItem: (Int) -> Unit,
+    tabCurrentIndex: Int
 ) {
     val characterState = characterDetailViewModel.ui.observeAsState()
     characterDetailViewModel.getCharacter(id)
     val result = characterState.value
 
-    ScaffoldTopBar(
-        onTabClick = { },
+    ScaffoldView(
+        onTabClick = {
+            onTabItem(it)
+        },
+        tabCurrentIndex = tabCurrentIndex,
         topBarText = result?.name.orEmpty()
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
                 .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(50.dp)
