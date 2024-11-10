@@ -39,11 +39,7 @@ fun CharacterListScreen(
                     ContentCharacterList(
                         onItemClick = onItemClick,
                         characterList = state.characterList,
-                        onActions = {
-                            onActions(
-                                CharacterListScreenAction.OnTryAgainClick
-                            )
-                        }
+                        onActions = onActions
                     )
                 }
 
@@ -73,13 +69,13 @@ fun ContentCharacterList(
     ) {
         items(characterList) { character ->
             CardItem(
-                item = character,
                 onClick = { onItemClick.invoke(character.id) },
-                nameProvider = { character.name },
-                photoURLProvider = { character.photoURL },
-                favClick = {
+                nameProvider = character.name,
+                photoURLProvider = character.photoURL,
+                favModel = character.favModel,
+                favClick = { favModel ->
                     onActions(
-                        CharacterListScreenAction.OnFavCharacterClick(character.favModel)
+                        CharacterListScreenAction.OnFavCharacterClick(favModel)
                     )
                 }
             )

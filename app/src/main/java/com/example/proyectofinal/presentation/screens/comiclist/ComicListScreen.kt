@@ -63,10 +63,9 @@ fun ContentComicList(
     ) {
         items(comicList) { comic ->
             CardItem(
-                item = comic,
                 onClick = { /*TODO*/ },
-                nameProvider = { comic.title },
-                photoURLProvider = { comic.photoURL }
+                nameProvider = comic.title,
+                photoURLProvider = comic.photoURL
             )
         }
     }

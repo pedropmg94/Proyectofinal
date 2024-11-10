@@ -3,6 +3,7 @@ package com.example.proyectofinal.presentation.screens.serielist
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,17 +67,12 @@ fun ContentSerieList(
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(serieList.size) { i ->
-            val item = serieList.get(i)
-            item.let { serie ->
-                //println(character)
-                CardItem(
-                    item = serie,
-                    onClick = { /*TODO*/ },
-                    nameProvider = { serie.title },
-                    photoURLProvider = { serie.photoURL }
-                )
-            }
+        items(serieList) { serie ->
+            CardItem(
+                onClick = { /*TODO*/ },
+                nameProvider = serie.title,
+                photoURLProvider = serie.photoURL
+            )
         }
     }
 }
