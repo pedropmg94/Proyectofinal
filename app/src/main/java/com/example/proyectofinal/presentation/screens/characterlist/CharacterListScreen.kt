@@ -7,7 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.ScreenUIState2
@@ -27,7 +29,7 @@ fun CharacterListScreen(
         onTabClick = {
             onTabItem(it)
         },
-        topBarText = AppTitle
+        topBarText = stringResource(id = R.string.app_title)
     ) {
         Column(modifier = Modifier.padding(it)) {
             when (state.characterUIState) {
@@ -93,5 +95,3 @@ fun MovieListScreenPreview() {
         onActions = {}
     )
 }
-
-private const val AppTitle = "MARVELIX"
