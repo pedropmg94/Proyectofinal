@@ -11,10 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,28 +23,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.proyectofinal.R
-import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.presentation.theme.globalElevation
 import com.example.proyectofinal.presentation.theme.globalPadding
 import com.example.proyectofinal.presentation.theme.globalRoundedCornerShape
 
 @Composable
-fun <T : Any> CardItem(
-    item: T,
+fun CardItem(
     onClick: () -> Unit,
-    nameProvider: (T) -> String,
-    photoURLProvider: (T) -> String,
+    nameProvider: String,
+    photoURLProvider: String,
+    favModel: FavModel? = null,
     favClick: (FavModel) -> Unit = {}
 ) {
     Card(
         modifier = Modifier.padding(globalPadding),
-        elevation = globalElevation,
+        elevation = CardDefaults.cardElevation(globalElevation),
         shape = RoundedCornerShape(globalRoundedCornerShape)
     ) {
         Column(
@@ -61,16 +60,15 @@ fun <T : Any> CardItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                CharacterName(nameProvider(item))
+                CharacterName(nameProvider)
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                if (item is CharacterModel) {
-                    val character = item as CharacterModel
-                    StarIcon(character.favModel, favClick)
+                if (favModel != null) {
+                    StarIcon(favModel, favClick)
                 }
             }
-            ItemImage(nameProvider(item), photoURLProvider(item))
+            ItemImage(nameProvider, photoURLProvider)
         }
     }
 }

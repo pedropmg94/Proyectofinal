@@ -63,6 +63,7 @@ class CharacterListViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val updatedList = _state.value?.characterList?.map { characterModel ->
                 if (characterModel.id == favModel.id) {
+                    println("PEDRO $characterModel")
                     characterModel.copy(favModel = favModel)
                 } else {
                     characterModel
