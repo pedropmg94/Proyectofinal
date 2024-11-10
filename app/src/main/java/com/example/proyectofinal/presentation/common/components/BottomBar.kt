@@ -1,40 +1,33 @@
 package com.example.proyectofinal.presentation.common.components
 
-import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BottomBar(
-    tabs: List<String>,
-    onTabSelected: (Int) -> Unit
+    onTabSelected: (Int) -> Unit,
+    currentIndex: Int
 ) {
-    var selectedTabIndex by remember { mutableStateOf(0) }
+    val tabs = listOf("Characters", "Comics", "Series")
 
     TabRow(
-        selectedTabIndex = selectedTabIndex,
+        selectedTabIndex = currentIndex,
         backgroundColor = Color.Black
     ) {
         tabs.forEachIndexed { index, title ->
             Tab(
-                selected = selectedTabIndex == index,
-                onClick = {
-                    selectedTabIndex = index
-                    onTabSelected(index)
-                },
+                selected = currentIndex == index,
+                onClick = { onTabSelected(index) },
                 text = {
                     Text(
                         text = title,
-                        color = Color.White,
-                        fontWeight = if (selectedTabIndex == index) FontWeight.Bold else FontWeight.Normal,
+                        color = if (currentIndex == index) Color.White else Color.Gray,
+                        fontWeight = if (currentIndex == index) FontWeight.Bold else FontWeight.Normal,
                     )
                 }
             )
@@ -42,14 +35,11 @@ fun BottomBar(
     }
 }
 
-
 @Preview
 @Composable
 fun HeaderTabLayoutPreview() {
-    val tabs = listOf("Personajes", "Comics", "Series")
-
     BottomBar(
-        tabs = tabs,
-        onTabSelected = {}
+        onTabSelected = {},
+        currentIndex = 0
     )
 }

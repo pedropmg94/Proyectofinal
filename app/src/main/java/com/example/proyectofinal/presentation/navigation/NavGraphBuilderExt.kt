@@ -37,12 +37,12 @@ fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
                 navController.navigate("${Screen.CharacterDetailScreen.route}/$characterID")
             },
             onTabItem = { tabIndex ->
-                when (tabIndex) {
-                    0 -> navController.navigate(Screen.CharacterListScreen.route)
-                    1 -> navController.navigate(Screen.ComicListScreen.route)
-                    2 -> navController.navigate(Screen.SerieListScreen.route)
-                }
+                tabNavigation(
+                    navController = navController,
+                    tabIndex = tabIndex
+                )
             },
+            tabCurrentIndex = TabCharacters,
             onActions = { action ->
                 characterListViewModel.handleAction(action)
             }
@@ -50,14 +50,23 @@ fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.addCharacterDetailScreen() {
+fun NavGraphBuilder.addCharacterDetailScreen(navController: NavHostController) {
     composable(
         route = Screen.CharacterDetailScreen.route + "/{characterID}",
         arguments = Screen.CharacterDetailScreen.arguments
     ) { navBackStackEntry ->
         val idString = navBackStackEntry.arguments?.getString("characterID")
         val id = idString?.toIntOrNull() ?: 0
-        CharacterDetailScreen(id = id)
+        CharacterDetailScreen(
+            id = id,
+            onTabItem = { tabIndex ->
+                tabNavigation(
+                    navController = navController,
+                    tabIndex = tabIndex
+                )
+            },
+            tabCurrentIndex = TabCharacters
+        )
     }
 }
 
@@ -69,12 +78,12 @@ fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
         ComicListScreen(
             state = state,
             onTabItem = { tabIndex ->
-                when (tabIndex) {
-                    0 -> navController.navigate(Screen.CharacterListScreen.route)
-                    1 -> navController.navigate(Screen.ComicListScreen.route)
-                    2 -> navController.navigate(Screen.SerieListScreen.route)
-                }
+                tabNavigation(
+                    navController = navController,
+                    tabIndex = tabIndex
+                )
             },
+            tabCurrentIndex = TabComics,
             onActions = { action ->
                 comicListViewModel.handleAction(action)
             }
@@ -86,12 +95,26 @@ fun NavGraphBuilder.addSerieListScreen(navController: NavHostController) {
     composable(Screen.SerieListScreen.route) {
         SerieListScreen(
             onTabItem = { tabIndex ->
-                when (tabIndex) {
-                    0 -> navController.navigate(Screen.CharacterListScreen.route)
-                    1 -> navController.navigate(Screen.ComicListScreen.route)
-                    2 -> navController.navigate(Screen.SerieListScreen.route)
-                }
-            }
+                tabNavigation(
+                    navController = navController,
+                    tabIndex = tabIndex
+                )
+            },
+            tabCurrentIndex = TabSeries
         )
     }
 }
+
+private fun tabNavigation(
+    navController: NavHostController,
+    tabIndex: Int
+) = when (tabIndex) {
+    TabCharacters -> navController.navigate(Screen.CharacterListScreen.route)
+    TabComics -> navController.navigate(Screen.ComicListScreen.route)
+    TabSeries -> navController.navigate(Screen.SerieListScreen.route)
+    else -> {}
+}
+
+private const val TabCharacters = 0
+private const val TabComics = 1
+private const val TabSeries = 2
