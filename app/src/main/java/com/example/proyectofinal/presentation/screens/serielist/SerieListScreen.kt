@@ -9,6 +9,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.SerieModel
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
@@ -28,7 +30,7 @@ fun SerieListScreen(
         onTabClick = {
             onTabItem(it)
         },
-        topBarText = AppTitle
+        topBarText = stringResource(id = R.string.app_title)
     ) {
         Column(modifier = Modifier.padding(it)) {
 
@@ -85,5 +87,3 @@ fun MovieListScreenPreview() {
         onTabItem = {}
     )
 }
-
-private const val AppTitle = "MARVELIX"

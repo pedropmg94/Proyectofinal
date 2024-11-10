@@ -16,13 +16,13 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -99,7 +100,7 @@ fun BackgroundImage() {
 @Composable
 fun LogoText() {
     Text(
-        text = "MARVELIX",
+        text = stringResource(id = R.string.app_title),
         style = TextStyle(
             fontWeight = FontWeight.Bold,
             fontSize = 50.sp,
@@ -110,9 +111,8 @@ fun LogoText() {
 
 @Composable
 fun EmailBox() {
-    var email by remember {
-        mutableStateOf("")
-    }
+    var email by remember { mutableStateOf("") }
+
     TextField(
         modifier = Modifier
             .fillMaxWidth(),
@@ -138,10 +138,7 @@ fun EmailBox() {
 
 @Composable
 fun PasswordBox() {
-
-    var password by remember {
-        mutableStateOf("")
-    }
+    var password by remember { mutableStateOf("") }
 
     TextField(
         modifier = Modifier
@@ -169,14 +166,13 @@ fun PasswordBox() {
 
 @Composable
 fun LoginButton(onLoginSuccess: () -> Unit) {
-
     Button(
         onClick = { onLoginSuccess() },
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
-        shape = RoundedCornerShape(16.dp), // Bordes redondeados
-        border = BorderStroke(2.dp, Color.Black), // Borde lila
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(2.dp, Color.Black),
         colors = ButtonDefaults.buttonColors(Color.White)
     ) {
         Text(
@@ -205,8 +201,6 @@ fun RememberPasswordCheckbox() {
         )
     }
 }
-
-
 
 @Preview
 @Composable
