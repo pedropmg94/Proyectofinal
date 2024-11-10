@@ -2,9 +2,10 @@ package com.example.proyectofinal.presentation.screens.comiclist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinal.domain.usecase.GetComicListUseCase
+import com.example.proyectofinal.presentation.common.Action
+import com.example.proyectofinal.presentation.common.BaseViewModel
 import com.example.proyectofinal.presentation.common.ScreenUIState2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,10 +13,17 @@ import kotlinx.coroutines.withContext
 
 class ComicListViewModel(
     private val getComicListUseCase: GetComicListUseCase
-): ViewModel() {
+): BaseViewModel() {
 
     private val _state = MutableLiveData(ComicListState())
     val state: LiveData<ComicListState> get() = _state
+
+
+    override fun handleAction(action: Action) {
+        when (action) {
+            is ComicListScreenAction.OnTryAgainClick -> tryAgain()
+        }
+    }
 
     init {
         getData()
@@ -42,7 +50,7 @@ class ComicListViewModel(
         }
     }
 
-    fun retryComic() {
+    private fun tryAgain() {
         _state.value = _state.value?.copy(
             comicUIState = ScreenUIState2.Loading
         )

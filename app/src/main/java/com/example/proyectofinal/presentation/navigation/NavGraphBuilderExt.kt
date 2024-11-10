@@ -10,6 +10,8 @@ import com.example.proyectofinal.presentation.screens.characterlist.CharacterLis
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListState
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListViewModel
 import com.example.proyectofinal.presentation.screens.comiclist.ComicListScreen
+import com.example.proyectofinal.presentation.screens.comiclist.ComicListState
+import com.example.proyectofinal.presentation.screens.comiclist.ComicListViewModel
 import com.example.proyectofinal.presentation.screens.login.LoginScreen
 import com.example.proyectofinal.presentation.screens.serielist.SerieListScreen
 import org.koin.androidx.compose.koinViewModel
@@ -61,13 +63,20 @@ fun NavGraphBuilder.addCharacterDetailScreen() {
 
 fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
     composable(Screen.ComicListScreen.route) {
+        val comicListViewModel: ComicListViewModel = koinViewModel()
+        val state by comicListViewModel.state.observeAsState(ComicListState())
+
         ComicListScreen(
+            state = state,
             onTabItem = { tabIndex ->
                 when (tabIndex) {
                     0 -> navController.navigate(Screen.CharacterListScreen.route)
                     1 -> navController.navigate(Screen.ComicListScreen.route)
                     2 -> navController.navigate(Screen.SerieListScreen.route)
                 }
+            },
+            onActions = { action ->
+                comicListViewModel.handleAction(action)
             }
         )
     }
