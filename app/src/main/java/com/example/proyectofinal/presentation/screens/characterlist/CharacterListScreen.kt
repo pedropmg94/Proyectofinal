@@ -31,10 +31,7 @@ fun CharacterListScreen(
         topBarText = stringResource(id = R.string.app_title),
     ) {
         when (state.characterUIState) {
-            is ScreenUIState2.Loading -> {
-                LoadingView()
-            }
-
+            is ScreenUIState2.Loading -> LoadingView()
             is ScreenUIState2.Success -> {
                 ContentCharacterList(
                     onItemClick = onItemClick,
@@ -42,7 +39,6 @@ fun CharacterListScreen(
                     onActions = onActions
                 )
             }
-
             is ScreenUIState2.Error -> {
                 ErrorView(
                     error = state.characterUIState.error,
