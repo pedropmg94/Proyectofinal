@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,26 +18,30 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.proyectofinal.R
+import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.components.ScaffoldView
-import org.koin.androidx.compose.koinViewModel
+import com.example.proyectofinal.presentation.common.extension.EMPTY_STRING
 
 @Composable
 fun CharacterDetailScreen(
+    state: CharacterDetailState,
     id: Int,
-    characterDetailViewModel: CharacterDetailViewModel = koinViewModel(),
     onTabItem: (Int) -> Unit,
-    tabCurrentIndex: Int
+    tabCurrentIndex: Int,
+    onActions: (Action) -> Unit
 ) {
-    val characterState = characterDetailViewModel.ui.observeAsState()
-    characterDetailViewModel.getCharacter(id)
-    val result = characterState.value
+    LaunchedEffect(key1 = id) {
+        onActions(
+            CharacterDetailScreenAction.OnInitialize(id)
+        )
+    }
 
     ScaffoldView(
         onTabClick = {
             onTabItem(it)
         },
         tabCurrentIndex = tabCurrentIndex,
-        topBarText = result?.name.orEmpty()
+        topBarText = state.characterDetail.name
     ) {
         Column(
             modifier = Modifier
@@ -46,8 +50,8 @@ fun CharacterDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(50.dp)
         ) {
-            CharacterImage(result?.photoURL)
-            CharacterDescription(result?.description)
+            CharacterImage(state.characterDetail.photoURL)
+            CharacterDescription(state.characterDetail.description)
         }
     }
 }
@@ -61,7 +65,7 @@ private fun CharacterImage(photoURL: String?) {
         placeholder = painterResource(id = R.drawable.marvellogo),
         error = painterResource(id = R.drawable.marvellogo),
         model = photoURL,
-        contentDescription = ""
+        contentDescription = String.EMPTY_STRING
     )
 }
 

@@ -7,6 +7,7 @@ import com.example.proyectofinal.data.mappers.toFavModel
 import com.example.proyectofinal.data.remote.RemoteDataSource
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.FavModel
+import com.example.proyectofinal.presentation.common.extension.ZERO
 
 class CharacterRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
@@ -16,7 +17,7 @@ class CharacterRepositoryImpl(
         val remoteData = remoteDataSource.getCharacterList()
         val favList = localDataSource.getFav().map { it.toFavModel() }
         return remoteData.data?.results?.mapNotNull { result ->
-            val fav = favList.find { it.id == result.id } ?: FavModel(result.id ?: 0, false)
+            val fav = favList.find { it.id == result.id } ?: FavModel(result.id ?: Int.ZERO, false)
             result.toCharacterModel(fav)
         } ?: listOf()
     }
@@ -25,7 +26,7 @@ class CharacterRepositoryImpl(
         val remoteData = remoteDataSource.getCharacterDetail(id)
         val favList = localDataSource.getFav().map { it.toFavModel() }
         val result = remoteData.data?.results?.firstOrNull()
-        val fav = favList.find { it.id == result?.id } ?: FavModel(result?.id ?: 0, false)
+        val fav = favList.find { it.id == result?.id } ?: FavModel(result?.id ?: Int.ZERO, false)
         return result?.toCharacterModel(fav) ?: CharacterModel(0, "", "", "", fav)
     }
 

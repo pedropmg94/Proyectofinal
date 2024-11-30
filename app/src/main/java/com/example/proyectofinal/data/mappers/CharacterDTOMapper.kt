@@ -9,13 +9,15 @@ import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.domain.model.ComicModel
 import com.example.proyectofinal.domain.model.FavModel
 import com.example.proyectofinal.domain.model.SerieModel
+import com.example.proyectofinal.presentation.common.extension.EMPTY_STRING
+import com.example.proyectofinal.presentation.common.extension.ZERO
 
 fun CharacterResult.toCharacterModel(favModel: FavModel): CharacterModel? {
     val photo = getPhoto(thumbnail)
 
     return if (!photo.isNullOrEmpty()) {
         CharacterModel(
-            id = id ?: 0,
+            id = id ?: Int.ZERO,
             name = name.orEmpty(),
             description = description.orEmpty(),
             photoURL = photo,
@@ -29,7 +31,7 @@ fun ComicResult.toComicModel(): ComicModel? {
     val photo = getPhoto(thumbnail)
     return if (!photo.isNullOrEmpty()) {
         ComicModel(
-            id = id ?: 0,
+            id = id ?: Int.ZERO,
             title = title.orEmpty(),
             description = description.orEmpty(),
             photoURL = photo
@@ -41,7 +43,7 @@ fun SerieResult.toSerieModel(): SerieModel? {
     val photo = getPhoto(thumbnail)
     return if (!photo.isNullOrEmpty()) {
         SerieModel(
-            id = id ?: 0,
+            id = id ?: Int.ZERO,
             title = title.orEmpty(),
             description = description.orEmpty(),
             photoURL = photo
@@ -60,11 +62,10 @@ fun FavModel.toFavLocal() = FavLocal(
 )
 
 private fun getPhoto(thumbnail: Thumbnail?) : String? {
-    val separator = if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) Dot else Empty
+    val separator = if (!thumbnail?.path.isNullOrEmpty() && !thumbnail?.extension.isNullOrEmpty()) Dot else String.EMPTY_STRING
     val photo = "${thumbnail?.path.orEmpty()}$separator${thumbnail?.extension.orEmpty()}"
     return if (photo.contains(NotImage)) null else photo
 }
 
 private const val Dot = "."
-private const val Empty = ""
 private const val NotImage = "image_not_available"

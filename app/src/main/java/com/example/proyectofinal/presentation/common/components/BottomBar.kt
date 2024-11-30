@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.proyectofinal.presentation.common.extension.ZERO
 
 @Composable
 fun BottomBar(
@@ -40,6 +41,6 @@ fun BottomBar(
 fun HeaderTabLayoutPreview() {
     BottomBar(
         onTabSelected = {},
-        currentIndex = 0
+        currentIndex = Int.ZERO
     )
 }
