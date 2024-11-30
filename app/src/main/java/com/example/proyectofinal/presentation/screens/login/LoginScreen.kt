@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.proyectofinal.R
+import com.example.proyectofinal.presentation.common.extension.EMPTY_STRING
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -111,7 +112,7 @@ fun LogoText() {
 
 @Composable
 fun EmailBox() {
-    var email by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf(String.EMPTY_STRING) }
 
     TextField(
         modifier = Modifier
@@ -130,7 +131,7 @@ fun EmailBox() {
         leadingIcon = {
             Image(
                 imageVector = Icons.Default.Email,
-                contentDescription = ""
+                contentDescription = String.EMPTY_STRING
             )
         }
     )
@@ -138,7 +139,7 @@ fun EmailBox() {
 
 @Composable
 fun PasswordBox() {
-    var password by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf(String.EMPTY_STRING) }
 
     TextField(
         modifier = Modifier
@@ -158,7 +159,7 @@ fun PasswordBox() {
         leadingIcon = {
             Icon(
                 imageVector = Icons.Outlined.Lock,
-                contentDescription = ""
+                contentDescription = String.EMPTY_STRING
             )
         }
     )

@@ -5,7 +5,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.example.proyectofinal.presentation.common.extension.ZERO
 import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailScreen
+import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailState
+import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailViewModel
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListScreen
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListState
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListViewModel
@@ -57,17 +60,22 @@ fun NavGraphBuilder.addCharacterDetailScreen(navController: NavHostController) {
         route = Screen.CharacterDetailScreen.route + "/{characterID}",
         arguments = Screen.CharacterDetailScreen.arguments
     ) { navBackStackEntry ->
-        val idString = navBackStackEntry.arguments?.getString("characterID")
-        val id = idString?.toIntOrNull() ?: 0
+        val characterDetailViewModel: CharacterDetailViewModel = koinViewModel()
+        val state by characterDetailViewModel.state.observeAsState(CharacterDetailState())
+        val idString = navBackStackEntry.arguments?.getString(CharacterArgs)
         CharacterDetailScreen(
-            id = id,
+            state = state,
+            id = idString?.toIntOrNull() ?: Int.ZERO,
             onTabItem = { tabIndex ->
                 tabNavigation(
                     navController = navController,
                     tabIndex = tabIndex
                 )
             },
-            tabCurrentIndex = TabCharacters
+            tabCurrentIndex = TabCharacters,
+            onActions = { action ->
+                characterDetailViewModel.handleAction(action)
+            }
         )
     }
 }
@@ -127,3 +135,4 @@ private fun tabNavigation(
 private const val TabCharacters = 0
 private const val TabComics = 1
 private const val TabSeries = 2
+private const val CharacterArgs = "characterID"
