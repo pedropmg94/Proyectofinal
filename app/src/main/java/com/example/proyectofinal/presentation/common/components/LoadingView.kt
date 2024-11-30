@@ -28,7 +28,8 @@ import com.example.proyectofinal.presentation.theme.globalRoundedCornerShape
 
 @Composable
 fun LoadingView() {
-    Box(modifier = Modifier.fillMaxSize(),
+    Box(
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()

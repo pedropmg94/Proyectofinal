@@ -3,26 +3,25 @@ package com.example.proyectofinal.presentation.screens.serielist
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.SerieModel
+import com.example.proyectofinal.presentation.common.Action
+import com.example.proyectofinal.presentation.common.ScreenUIState2
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
 import com.example.proyectofinal.presentation.common.components.LoadingView
 import com.example.proyectofinal.presentation.common.components.ScaffoldView
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SerieListScreen(
-    serieListViewModel: SerieListViewModel = koinViewModel(),
+    state: SerieListState,
     onTabItem: (Int) -> Unit,
     tabCurrentIndex: Int,
+    onActions: (Action) -> Unit
 ) {
-    val state = serieListViewModel.ui.observeAsState()
-
     ScaffoldView(
         onTabClick = {
             onTabItem(it)
@@ -30,25 +29,19 @@ fun SerieListScreen(
         tabCurrentIndex = tabCurrentIndex,
         topBarText = stringResource(id = R.string.app_title)
     ) {
-        when (state.value) {
-            is UISerieState.Loading -> {
-                LoadingView()
-            }
-
-            is UISerieState.Loaded -> {
-                val uiState = state.value as UISerieState.Loaded
-                ContentSerieList(serieList = uiState.items)
-            }
-
-            is UISerieState.Error -> {
-                val uiState = state.value as UISerieState.Error
+        when (state.serieUIState) {
+            is ScreenUIState2.Loading -> LoadingView()
+            is ScreenUIState2.Success -> ContentSerieList(serieList = state.serieList)
+            is ScreenUIState2.Error -> {
                 ErrorView(
-                    uiState.error ?: "Unknown error",
-                    onClickRetry = { serieListViewModel.retrySerie() }
+                    error = state.serieUIState.error,
+                    onClickRetry = {
+                        onActions(
+                            SerieListScreenAction.OnTryAgainClick
+                        )
+                    }
                 )
             }
-
-            else -> {}
         }
     }
 }
@@ -75,7 +68,9 @@ fun ContentSerieList(
 @Composable
 fun MovieListScreenPreview() {
     SerieListScreen(
+        state = SerieListState(),
         onTabItem = {},
-        tabCurrentIndex = 2
+        tabCurrentIndex = 2,
+        onActions = {}
     )
 }

@@ -2,25 +2,31 @@ package com.example.proyectofinal.presentation.screens.serielist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinal.domain.model.SerieModel
 import com.example.proyectofinal.domain.usecase.GetSerieListUseCase
+import com.example.proyectofinal.presentation.common.Action
+import com.example.proyectofinal.presentation.common.BaseViewModel
+import com.example.proyectofinal.presentation.common.ScreenUIState2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SerieListViewModel(
     private val getSerieListUseCase: GetSerieListUseCase
-    ): ViewModel() {
+    ): BaseViewModel() {
+
+    private val _state = MutableLiveData(SerieListState())
+    val state: LiveData<SerieListState> get() = _state
+
+    override fun handleAction(action: Action) {
+        when (action) {
+            is SerieListScreenAction.OnTryAgainClick -> tryAgain()
+        }
+    }
 
     init {
         getData()
     }
-
-    private val _ui = MutableLiveData<UISerieState>(UISerieState.Loading())
-    val ui: LiveData<UISerieState> get() = _ui
-
 
     private fun getData() {
 
@@ -28,27 +34,25 @@ class SerieListViewModel(
             try {
                 val serieList = getSerieListUseCase.invoke()
                 withContext(Dispatchers.Main) {
-                    _ui.value = UISerieState.Loaded(items = serieList)
+                    _state.value = _state.value?.copy(
+                        serieUIState = ScreenUIState2.Success,
+                        serieList = serieList
+                    )
                 }
             } catch (exception: Exception) {
                 withContext(Dispatchers.Main) {
-                    _ui.value = UISerieState.Error(error = exception.message)
+                    _state.value = _state.value?.copy(
+                        serieUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
+                    )
                 }
-
             }
         }
-
     }
 
-    fun retrySerie() {
-        _ui.value = UISerieState.Loading()
+    private fun tryAgain() {
+        _state.value = _state.value?.copy(
+            serieUIState = ScreenUIState2.Loading
+        )
         getData()
     }
-}
-
-sealed class UISerieState() {
-    class Loading(): UISerieState()
-    class Loaded(val items: List<SerieModel>): UISerieState()
-    class Error(val error: String? = null): UISerieState()
-
 }

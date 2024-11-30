@@ -30,14 +30,8 @@ fun ComicListScreen(
         topBarText = stringResource(id = R.string.app_title)
     ) {
         when (state.comicUIState) {
-            is ScreenUIState2.Loading -> {
-                LoadingView()
-            }
-
-            is ScreenUIState2.Success -> {
-                ContentComicList(comicList = state.comicList)
-            }
-
+            is ScreenUIState2.Loading -> LoadingView()
+            is ScreenUIState2.Success -> ContentComicList(comicList = state.comicList)
             is ScreenUIState2.Error -> {
                 ErrorView(
                     error = state.comicUIState.error,
