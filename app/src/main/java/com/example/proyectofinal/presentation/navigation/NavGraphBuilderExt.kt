@@ -5,8 +5,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.example.proyectofinal.presentation.common.Tab
 import com.example.proyectofinal.presentation.common.extension.ZERO
-import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailScreen
+import com.example.proyectofinal.presentation.screens.characterdetails.DetailScreen
 import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailState
 import com.example.proyectofinal.presentation.screens.characterdetails.CharacterDetailViewModel
 import com.example.proyectofinal.presentation.screens.characterlist.CharacterListScreen
@@ -47,7 +48,7 @@ fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
                     tabIndex = tabIndex
                 )
             },
-            tabCurrentIndex = TabCharacters,
+            tabCurrentIndex = Tab.Characters.index,
             onActions = { action ->
                 characterListViewModel.handleAction(action)
             }
@@ -55,7 +56,7 @@ fun NavGraphBuilder.addCharacterListScreen(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.addCharacterDetailScreen(navController: NavHostController) {
+fun NavGraphBuilder.addDetailScreen(navController: NavHostController) {
     composable(
         route = Screen.CharacterDetailScreen.route + "/{characterID}",
         arguments = Screen.CharacterDetailScreen.arguments
@@ -63,7 +64,7 @@ fun NavGraphBuilder.addCharacterDetailScreen(navController: NavHostController) {
         val characterDetailViewModel: CharacterDetailViewModel = koinViewModel()
         val state by characterDetailViewModel.state.observeAsState(CharacterDetailState())
         val idString = navBackStackEntry.arguments?.getString(CharacterArgs)
-        CharacterDetailScreen(
+        DetailScreen(
             state = state,
             id = idString?.toIntOrNull() ?: Int.ZERO,
             onTabItem = { tabIndex ->
@@ -93,7 +94,7 @@ fun NavGraphBuilder.addComicListScreen(navController: NavHostController) {
                     tabIndex = tabIndex
                 )
             },
-            tabCurrentIndex = TabComics,
+            tabCurrentIndex = Tab.Comics.index,
             onActions = { action ->
                 comicListViewModel.handleAction(action)
             }
@@ -114,7 +115,7 @@ fun NavGraphBuilder.addSerieListScreen(navController: NavHostController) {
                     tabIndex = tabIndex
                 )
             },
-            tabCurrentIndex = TabSeries,
+            tabCurrentIndex = Tab.Series.index,
             onActions = { action ->
                 serieListViewModel.handleAction(action)
             }
@@ -125,14 +126,11 @@ fun NavGraphBuilder.addSerieListScreen(navController: NavHostController) {
 private fun tabNavigation(
     navController: NavHostController,
     tabIndex: Int
-) = when (tabIndex) {
-    TabCharacters -> navController.navigate(Screen.CharacterListScreen.route)
-    TabComics -> navController.navigate(Screen.ComicListScreen.route)
-    TabSeries -> navController.navigate(Screen.SerieListScreen.route)
+) = when (Tab.fromIndex(tabIndex)) {
+    Tab.Characters -> navController.navigate(Screen.CharacterListScreen.route)
+    Tab.Comics -> navController.navigate(Screen.ComicListScreen.route)
+    Tab.Series -> navController.navigate(Screen.SerieListScreen.route)
     else -> {}
 }
 
-private const val TabCharacters = 0
-private const val TabComics = 1
-private const val TabSeries = 2
 private const val CharacterArgs = "characterID"

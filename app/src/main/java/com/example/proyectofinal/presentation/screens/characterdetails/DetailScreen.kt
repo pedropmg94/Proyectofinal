@@ -23,7 +23,7 @@ import com.example.proyectofinal.presentation.common.components.ScaffoldView
 import com.example.proyectofinal.presentation.common.extension.EMPTY_STRING
 
 @Composable
-fun CharacterDetailScreen(
+fun DetailScreen(
     state: CharacterDetailState,
     id: Int,
     onTabItem: (Int) -> Unit,
@@ -32,7 +32,7 @@ fun CharacterDetailScreen(
 ) {
     LaunchedEffect(key1 = id) {
         onActions(
-            CharacterDetailScreenAction.OnInitialize(id)
+            CharacterDetailScreenAction.OnInitialize(id, tabCurrentIndex)
         )
     }
 
@@ -41,7 +41,7 @@ fun CharacterDetailScreen(
             onTabItem(it)
         },
         tabCurrentIndex = tabCurrentIndex,
-        topBarText = state.characterDetail.name
+        topBarText = state.name
     ) {
         Column(
             modifier = Modifier
@@ -50,8 +50,8 @@ fun CharacterDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(50.dp)
         ) {
-            CharacterImage(state.characterDetail.photoURL)
-            CharacterDescription(state.characterDetail.description)
+            CharacterImage(state.photoURL)
+            CharacterDescription(state.description)
         }
     }
 }

@@ -79,5 +79,4 @@ class CharacterListViewModel(
             favUseCase.invoke(favModel)
         }
     }
-
 }
