@@ -3,7 +3,7 @@ package com.example.proyectofinal.presentation.screens.serielist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinal.domain.usecase.GetSerieListUseCase
+import com.example.proyectofinal.domain.usecase.SeriesUseCase
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.BaseViewModel
 import com.example.proyectofinal.presentation.common.ScreenUIState2
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SerieListViewModel(
-    private val getSerieListUseCase: GetSerieListUseCase
+    private val seriesUseCase: SeriesUseCase
     ): BaseViewModel() {
 
     private val _state = MutableLiveData(SerieListState())
@@ -32,7 +32,7 @@ class SerieListViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val serieList = getSerieListUseCase.invoke()
+                val serieList = seriesUseCase.invoke()
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
                         serieUIState = ScreenUIState2.Success,

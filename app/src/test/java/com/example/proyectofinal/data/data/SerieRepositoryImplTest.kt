@@ -1,14 +1,7 @@
 package com.keepcoding.androidsuperpoderes.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.proyectofinal.data.local.LocalDataSource
-import com.example.proyectofinal.data.local.model.FavLocal
 import com.example.proyectofinal.data.remote.RemoteDataSource
-import com.example.proyectofinal.data.remote.dto.CharacterDTO
-import com.example.proyectofinal.data.remote.dto.CharacterResult
-import com.example.proyectofinal.data.remote.dto.Comics
-import com.example.proyectofinal.data.remote.dto.Data
-import com.example.proyectofinal.data.remote.dto.Events
 import com.example.proyectofinal.data.remote.dto.Item
 import com.example.proyectofinal.data.remote.dto.ItemXX
 import com.example.proyectofinal.data.remote.dto.ItemXXX
@@ -21,11 +14,8 @@ import com.example.proyectofinal.data.remote.dto.SerieData
 import com.example.proyectofinal.data.remote.dto.SerieEvents
 import com.example.proyectofinal.data.remote.dto.SerieResult
 import com.example.proyectofinal.data.remote.dto.SerieStories
-import com.example.proyectofinal.data.remote.dto.Series
-import com.example.proyectofinal.data.remote.dto.Stories
 import com.example.proyectofinal.data.remote.dto.Thumbnail
 import com.example.proyectofinal.data.remote.dto.Url
-import com.example.proyectofinal.data.repository.CharacterRepositoryImpl
 import com.example.proyectofinal.data.repository.SerieRepositoryImpl
 import com.keepcoding.androidsuperpoderes.testutil.DefaultDispatcherRule
 import io.mockk.MockKAnnotations
@@ -61,7 +51,7 @@ class SerieRepositoryImplTest {
             remoteDataSource = remoteDataSource
         )
 
-        val res = repo.getSerieList()
+        val res = repo.getSeries()
 
         assertThat(res, instanceOf(List::class.java))
         assertThat(res.size, `is`(1))
