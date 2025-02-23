@@ -1,19 +1,18 @@
-package com.example.proyectofinal.data.local
+package com.example.proyectofinal.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.proyectofinal.data.local.model.FavLocal
+import com.example.proyectofinal.data.local.model.FavLocalEntity
 
 @Dao
 interface FavDao {
 
     @Query("SELECT * FROM FavTable")
-    suspend fun getFavorites(): List<FavLocal>
+    suspend fun getFavorites(): List<FavLocalEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavorites(vararg favLocal: FavLocal)
+    suspend fun insertFavorites(vararg favLocalEntity: FavLocalEntity)
 
 }

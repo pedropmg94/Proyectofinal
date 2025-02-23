@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.proyectofinal.presentation.common.extension.ZERO
 
 @Entity(tableName = "FavTable")
-data class FavLocal(
+data class FavLocalEntity(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int = Int.ZERO,
     @ColumnInfo(name = "favorite") val favorite: Boolean
 )

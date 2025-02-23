@@ -2,7 +2,7 @@ package com.keepcoding.androidsuperpoderes.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.proyectofinal.data.local.LocalDataSource
-import com.example.proyectofinal.data.local.model.FavLocal
+import com.example.proyectofinal.data.local.model.FavLocalEntity
 import com.example.proyectofinal.data.remote.RemoteDataSource
 import com.example.proyectofinal.data.remote.dto.CharacterDTO
 import com.example.proyectofinal.data.remote.dto.CharacterResult
@@ -64,8 +64,8 @@ class CharacterRepositoryImplTest {
 }
 
 fun getCharacterLocal() = listOf(
-    FavLocal(id = 1, favorite = false),
-    FavLocal(id = 2, favorite = true)
+    FavLocalEntity(id = 1, favorite = false),
+    FavLocalEntity(id = 2, favorite = true)
     )
 
 fun getCharacterRemote() =

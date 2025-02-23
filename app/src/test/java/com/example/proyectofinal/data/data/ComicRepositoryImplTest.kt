@@ -56,7 +56,7 @@ class ComicRepositoryImplTest {
             remoteDataSource = remoteDataSource
         )
 
-        val res = repo.getComicList()
+        val res = repo.getComics()
 
         assertThat(res, instanceOf(List::class.java))
         assertThat(res.size, `is`(1))

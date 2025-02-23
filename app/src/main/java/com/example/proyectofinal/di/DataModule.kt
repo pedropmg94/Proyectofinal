@@ -2,9 +2,9 @@ package com.example.proyectofinal.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.proyectofinal.data.local.FavDataBase
+import com.example.proyectofinal.data.local.MarvelDataBase
 import com.example.proyectofinal.data.local.LocalDataSource
-import com.example.proyectofinal.data.local.model.LocalDataSourceImpl
+import com.example.proyectofinal.data.local.LocalDataSourceImpl
 import com.example.proyectofinal.data.remote.MarvelAPI
 import com.example.proyectofinal.data.remote.RemoteDataSource
 import com.example.proyectofinal.data.remote.RemoteDataSourceImpl
@@ -96,17 +96,22 @@ val dataModule = module {
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<MarvelAPI> { getMarvelAPI(get()) }
     single<CharacterRepository> { CharacterRepositoryImpl(get(), get()) }
-    single<ComicRepository> { ComicRepositoryImpl(get()) }
-    single<SerieRepository> { SerieRepositoryImpl(get()) }
+    single<ComicRepository> { ComicRepositoryImpl(get(), get()) }
+    single<SerieRepository> { SerieRepositoryImpl(get(), get()) }
 
     single { getDatabase(get()) }
+//    single { get<MarvelDataBase>().comicsDao() }
+//    single { get<MarvelDataBase>().seriesDao() }
 }
 
 private fun getMarvelAPI(retrofit: Retrofit) =
     retrofit.create(MarvelAPI::class.java)
 
-private fun getDatabase(context: Context) : FavDataBase =
+private fun getDatabase(context: Context) : MarvelDataBase =
     Room.databaseBuilder(
-        context,
-        FavDataBase::class.java, "favourite-db"
+        context = context,
+        klass = MarvelDataBase::class.java,
+        name = MarvelDataBaseName
     ).build()
+
+private const val MarvelDataBaseName = "marvel_database"
