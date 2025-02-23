@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.SerieModel
 import com.example.proyectofinal.presentation.common.Action
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
 import com.example.proyectofinal.presentation.common.components.LoadingView
@@ -30,9 +30,9 @@ fun SerieListScreen(
         topBarText = stringResource(id = R.string.app_title)
     ) {
         when (state.serieUIState) {
-            is ScreenUIState2.Loading -> LoadingView()
-            is ScreenUIState2.Success -> ContentSerieList(serieList = state.serieList)
-            is ScreenUIState2.Error -> {
+            is ScreenUIState.Loading -> LoadingView()
+            is ScreenUIState.Success -> ContentSerieList(serieList = state.serieList)
+            is ScreenUIState.Error -> {
                 ErrorView(
                     error = state.serieUIState.error,
                     onClickRetry = {
