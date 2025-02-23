@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.ComicModel
 import com.example.proyectofinal.presentation.common.Action
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
 import com.example.proyectofinal.presentation.common.components.LoadingView
@@ -30,9 +30,9 @@ fun ComicListScreen(
         topBarText = stringResource(id = R.string.app_title)
     ) {
         when (state.comicUIState) {
-            is ScreenUIState2.Loading -> LoadingView()
-            is ScreenUIState2.Success -> ContentComicList(comicList = state.comicList)
-            is ScreenUIState2.Error -> {
+            is ScreenUIState.Loading -> LoadingView()
+            is ScreenUIState.Success -> ContentComicList(comicList = state.comicList)
+            is ScreenUIState.Error -> {
                 ErrorView(
                     error = state.comicUIState.error,
                     onClickRetry = {

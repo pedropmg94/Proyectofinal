@@ -8,7 +8,7 @@ import com.example.proyectofinal.domain.usecase.FavUseCase
 import com.example.proyectofinal.domain.usecase.GetCharacterListUseCase
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.BaseViewModel
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -38,14 +38,14 @@ class CharacterListViewModel(
                 val characterList = getCharacterListUseCase.invoke()
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        characterUIState = ScreenUIState2.Success,
+                        characterUIState = ScreenUIState.Success,
                         characterList = characterList
                     )
                 }
             } catch(exception: Exception) {
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        characterUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
+                        characterUIState = ScreenUIState.Error(error = exception.message.orEmpty())
                     )
                 }
             }
@@ -54,7 +54,7 @@ class CharacterListViewModel(
 
     private fun tryAgain() {
         _state.value = _state.value?.copy(
-            characterUIState = ScreenUIState2.Loading
+            characterUIState = ScreenUIState.Loading
         )
         getData()
     }

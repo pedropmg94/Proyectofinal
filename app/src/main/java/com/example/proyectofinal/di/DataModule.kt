@@ -100,8 +100,6 @@ val dataModule = module {
     single<SerieRepository> { SerieRepositoryImpl(get(), get()) }
 
     single { getDatabase(get()) }
-//    single { get<MarvelDataBase>().comicsDao() }
-//    single { get<MarvelDataBase>().seriesDao() }
 }
 
 private fun getMarvelAPI(retrofit: Retrofit) =

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.proyectofinal.domain.usecase.SeriesUseCase
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.BaseViewModel
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,14 +35,14 @@ class SerieListViewModel(
                 val serieList = seriesUseCase.invoke()
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        serieUIState = ScreenUIState2.Success,
+                        serieUIState = ScreenUIState.Success,
                         serieList = serieList
                     )
                 }
             } catch (exception: Exception) {
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        serieUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
+                        serieUIState = ScreenUIState.Error(error = exception.message.orEmpty())
                     )
                 }
             }
@@ -51,7 +51,7 @@ class SerieListViewModel(
 
     private fun tryAgain() {
         _state.value = _state.value?.copy(
-            serieUIState = ScreenUIState2.Loading
+            serieUIState = ScreenUIState.Loading
         )
         getData()
     }

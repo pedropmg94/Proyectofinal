@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectofinal.R
 import com.example.proyectofinal.domain.model.CharacterModel
 import com.example.proyectofinal.presentation.common.Action
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import com.example.proyectofinal.presentation.common.components.CardItem
 import com.example.proyectofinal.presentation.common.components.ErrorView
 import com.example.proyectofinal.presentation.common.components.LoadingView
@@ -31,15 +31,15 @@ fun CharacterListScreen(
         topBarText = stringResource(id = R.string.app_title),
     ) {
         when (state.characterUIState) {
-            is ScreenUIState2.Loading -> LoadingView()
-            is ScreenUIState2.Success -> {
+            is ScreenUIState.Loading -> LoadingView()
+            is ScreenUIState.Success -> {
                 ContentCharacterList(
                     onItemClick = onItemClick,
                     characterList = state.characterList,
                     onActions = onActions
                 )
             }
-            is ScreenUIState2.Error -> {
+            is ScreenUIState.Error -> {
                 ErrorView(
                     error = state.characterUIState.error,
                     onClickRetry = {

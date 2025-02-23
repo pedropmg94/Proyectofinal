@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.proyectofinal.domain.usecase.ComicsUseCase
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.BaseViewModel
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,14 +36,14 @@ class ComicListViewModel(
                 val comicList = comicsUseCase.invoke()
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        comicUIState = ScreenUIState2.Success,
+                        comicUIState = ScreenUIState.Success,
                         comicList = comicList
                     )
                 }
             } catch(exception: Exception){
                 withContext(Dispatchers.Main) {
                     _state.value = _state.value?.copy(
-                        comicUIState = ScreenUIState2.Error(error = exception.message.orEmpty())
+                        comicUIState = ScreenUIState.Error(error = exception.message.orEmpty())
                     )
                 }
             }
@@ -52,7 +52,7 @@ class ComicListViewModel(
 
     private fun tryAgain() {
         _state.value = _state.value?.copy(
-            comicUIState = ScreenUIState2.Loading
+            comicUIState = ScreenUIState.Loading
         )
         getData()
     }

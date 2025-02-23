@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.proyectofinal.domain.usecase.GetCharacterDetailUseCase
 import com.example.proyectofinal.presentation.common.Action
 import com.example.proyectofinal.presentation.common.BaseViewModel
-import com.example.proyectofinal.presentation.common.ScreenUIState2
+import com.example.proyectofinal.presentation.common.ScreenUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,7 +29,7 @@ class CharacterDetailViewModel(
             val characterDetail = getCharacterDetailUseCase.invoke(id)
             withContext(Dispatchers.Main) {
                 _state.value = _state.value?.copy(
-                    characterDetailUIState = ScreenUIState2.Success,
+                    characterDetailUIState = ScreenUIState.Success,
                     characterDetail = characterDetail
                 )
             }
